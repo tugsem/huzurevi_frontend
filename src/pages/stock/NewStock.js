@@ -1,9 +1,14 @@
+/* eslint-disable */
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { addStock, getStockError } from '../../redux/stock/stockSlice';
+import capitalizeWords from '../../modules/capitalizeWords';
 
 const NewStock = () => {
+  const navigate = useNavigate();
+
   const [name, setName] = useState('');
   const [quantity, setQuantity] = useState('');
   const [unit, setUnit] = useState('Adet');
@@ -14,8 +19,12 @@ const NewStock = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(
-      addStock({ name, quantity, unit }),
+      addStock({
+        name: capitalizeWords(name),
+        quantity,
+        unit }),
     );
+    navigate('/stock')
   };
   let message;
   if (error) {
@@ -23,7 +32,8 @@ const NewStock = () => {
   }
   return (
     <section className="m-5 w-50">
-      <h1>Yeni Kayıt</h1>
+      <h1>Yeni Ürün Kaydı</h1>
+      <a href="update-item">Mevcut Ürünü Düzenle</a>
       {message}
       <Form className="d-flex flex-column" onSubmit={(e) => handleSubmit(e)}>
         <Form.Group>

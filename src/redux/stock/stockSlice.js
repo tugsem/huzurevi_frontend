@@ -32,6 +32,13 @@ export const removeStock = createAsyncThunk('stock/removeStock', async (id) => {
   return id;
 });
 
+export const updateStockItem = createAsyncThunk('stock/updateStockItem', async (payload) => {
+  const response = await axios.put(STOCK_URL + payload.id, payload);
+  console.log(response.json());
+  return payload;
+});
+
+/* eslint-disable */
 export const stockSlice = createSlice({
   name: 'stock',
   initialState,
@@ -50,15 +57,20 @@ export const stockSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addStock.fulfilled, (state, action) => {
+        state.status = 'idle';
         state.stock.push(action.payload);
       })
       .addCase(removeStock.fulfilled, (state, action) => {
         const stock = state.stock.filter((item) => item.id !== action.payload);
         state.stock = stock;
-      });
+      })
+      .addCase(updateStockItem.fulfilled, (state, action) => {
+        state.status = 'idle'
+        state.stock =  [...state.stock, ...action.payload];
+      })
   },
 });
-
+/* eslint-enable */
 export const selectAllStock = (state) => state.stock.stock;
 export const getStockStatus = (state) => state.stock.status;
 export const getStockError = (state) => state.stock.error;

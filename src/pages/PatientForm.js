@@ -1,6 +1,5 @@
 import React from 'react';
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import { Form, Button } from 'react-bootstrap';
 
 const PatientForm = () => (
   <div className="patientForm m-5 w-50">
