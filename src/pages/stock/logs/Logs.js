@@ -3,7 +3,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 import {
   fetchStockLogs, getStockLogs, getStockLogsStatus, removeStockLog,
-} from '../../redux/stock/stockLogSlice';
+} from '../../../redux/stock/stockLogSlice';
+import './logs.scss';
 
 /* eslint-disable */
 
@@ -43,7 +44,7 @@ const Logs = () => {
   }
 
   return (
-    <div className='m-5 w-100'>
+    <div className='stock-logs w-75'>
       <h1>Kayıtlar</h1>
        <Table className="table-fixed" striped bordered hover>
         <thead>

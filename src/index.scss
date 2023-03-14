@@ -4,6 +4,11 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Titillium Web', sans-serif;
-  font-weight: 600;
+  body {
+    min-height: 100vh;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+    overflow-x: hidden;
+  }
+
 }

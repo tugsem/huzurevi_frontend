@@ -1,68 +1,78 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
-import { fetchStock, selectAllStock, updateStockItem } from '../../redux/stock/stockSlice';
+import { Form, Button, Alert } from 'react-bootstrap';
+import { selectAllStock, updateStockItem, fetchStock } from '../../redux/stock/stockSlice';
 import capitalizeWords from '../../modules/capitalizeWords';
 import StockDropdown from '../../components/stockDropdown';
 
-/* eslint-disable */
-
-
 const UpdateItem = () => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [id, setId] = useState(null);
-  const [name, setName] = useState(null)
-  const [quantity, setQuantity] = useState(null)
-  const [unit, setUnit] = useState('Adet')
-
+  const [name, setName] = useState(null);
+  const [quantity, setQuantity] = useState(null);
+  const [unit, setUnit] = useState(null);
+  const [showError, setShowError] = useState(false);
   const stock = useSelector(selectAllStock);
 
-  const handleSubmit = (e) => {
+  const canSave = id && quantity && unit;
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if(name) {
+    setShowError(false);
+    if (name && canSave) {
       dispatch(updateStockItem({
-      id,
-      name: capitalizeWords(name),
-      quantity,
-      unit,
-    }))
-    } else {
+        id,
+        name: capitalizeWords(name),
+        quantity,
+        unit,
+      }));
+      dispatch(fetchStock());
+      navigate('/');
+    } else if (canSave) {
+      setShowError(false);
       dispatch(updateStockItem({
         id,
         quantity,
-        unit
-      }))
+        unit,
+      }));
+      dispatch(fetchStock());
+      navigate('/');
+    } else {
+      setShowError(true);
     }
-    dispatch(fetchStock());
-    navigate('/stock')
-  }
+  };
   return (
-  <Form className="d-flex flex-column m-5 w-50" onSubmit={(e) => handleSubmit(e)}>
-    <StockDropdown menu={stock} handleClick={(e) => setId(e.target.value)}/>
-        <Form.Group>
+    <div className="form-container">
+      <h1 className="main-heading"> Mevcut Ürünü Düzenle</h1>
+      <Form className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
+        <StockDropdown menu={stock} handleClick={(e) => setId(e.target.value)} />
+        <Form.Group required>
           <Form.Label>Yeni ürün ismi</Form.Label>
           <Form.Control type="text" onBlur={(e) => setName(e.target.value)} />
         </Form.Group>
-        <Form.Group>
+        <Form.Group required>
           <Form.Label>Miktar</Form.Label>
           <Form.Control type="text" onBlur={(e) => setQuantity(Number(e.target.value))} />
         </Form.Group>
-        <Form.Group>
+        <Form.Group required>
           <Form.Label>Birim</Form.Label>
           <Form.Select id="dd_stock_unit" onChange={(e) => setUnit(e.target.value)}>
+            <option value={null}>Seçiniz</option>
             <option>Adet</option>
             <option>Kg</option>
             <option>Lt</option>
           </Form.Select>
         </Form.Group>
+        {showError && <Alert variant="danger">Lütfen gerekli yerleri doldurunuz.</Alert>}
         <Button variant="info" type="submit">
           Kaydet
         </Button>
       </Form>
-);
-}
+    </div>
+  );
+};
 
 export default UpdateItem;

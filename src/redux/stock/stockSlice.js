@@ -19,12 +19,8 @@ export const fetchStock = createAsyncThunk('stock/fetchStock', async () => {
 });
 
 export const addStock = createAsyncThunk('stock/addStock', async (payload) => {
-  try {
-    const response = await axios.post(STOCK_URL, payload);
-    return response.data;
-  } catch (error) {
-    return error.response.data;
-  }
+  const response = await axios.post(STOCK_URL, payload);
+  return response.data;
 });
 
 export const removeStock = createAsyncThunk('stock/removeStock', async (id) => {
@@ -33,11 +29,9 @@ export const removeStock = createAsyncThunk('stock/removeStock', async (id) => {
 });
 
 export const updateStockItem = createAsyncThunk('stock/updateStockItem', async (payload) => {
-  const response = await axios.put(STOCK_URL + payload.id, payload);
-  console.log(response.json());
+  await axios.put(STOCK_URL + payload.id, payload);
   return payload;
 });
-
 /* eslint-disable */
 export const stockSlice = createSlice({
   name: 'stock',
@@ -57,20 +51,24 @@ export const stockSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addStock.fulfilled, (state, action) => {
-        state.status = 'idle';
-        state.stock.push(action.payload);
+        state.stock = [action.payload, ...state.stock];
       })
       .addCase(removeStock.fulfilled, (state, action) => {
         const stock = state.stock.filter((item) => item.id !== action.payload);
         state.stock = stock;
       })
-      .addCase(updateStockItem.fulfilled, (state, action) => {
-        state.status = 'idle'
-        state.stock =  [...state.stock, ...action.payload];
+      .addCase(updateStockItem.pending, (state) => {
+        state.status = 'loading';
       })
+      .addCase(updateStockItem.fulfilled, (state, action) => {
+        const updatedItem = action.payload;
+        const stock = state.stock.map((item) => (item.id === updatedItem.id ? updatedItem : item));
+        state.stock = stock;
+        state.status = 'succeeded';
+      });
   },
 });
-/* eslint-enable */
+
 export const selectAllStock = (state) => state.stock.stock;
 export const getStockStatus = (state) => state.stock.status;
 export const getStockError = (state) => state.stock.error;

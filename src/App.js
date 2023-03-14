@@ -2,14 +2,12 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStockStatus, fetchStock } from './redux/stock/stockSlice';
-
-import PatientForm from './pages/PatientForm';
+import { ReactComponent as BgShape } from './assets/big-shape.svg';
 import './app.scss';
-import Navbar from './pages/navbar/Navbar';
+
 import Stock from './pages/stock/Stock';
-import Home from './pages/Home/Home';
 import NewStock from './pages/stock/NewStock';
-import Logs from './pages/stock/Logs';
+import Logs from './pages/stock/logs/Logs';
 import UpdateStock from './pages/stock/UpdateStock';
 import UpdateItem from './pages/stock/UpdateItem';
 
@@ -24,18 +22,15 @@ function App() {
   }, [stockStatus, dispatch]);
 
   return (
-    <div className="App d-flex">
+    <div className="App d-flex justify-content-center">
+      <BgShape className="bg-shape" />
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Navbar />}>
-            <Route index element={<Home />} />
-            <Route path="add-patient" element={<PatientForm />} />
-            <Route path="stock" element={<Stock />} />
-            <Route path="stock/new" element={<NewStock />} />
-            <Route path="stock/logs" element={<Logs />} />
-            <Route path="stock/update" element={<UpdateStock />} />
-            <Route path="stock/update-item" element={<UpdateItem />} />
-          </Route>
+          <Route path="/" element={<Stock />} />
+          <Route path="new" element={<NewStock />} />
+          <Route path="logs" element={<Logs />} />
+          <Route path="update" element={<UpdateStock />} />
+          <Route path="update-item" element={<UpdateItem />} />
         </Routes>
       </BrowserRouter>
     </div>

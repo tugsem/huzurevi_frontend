@@ -1,9 +1,8 @@
-/* eslint-disable */
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 import {
-  removeStock, selectAllStock, getStockStatus, getStockError
+  removeStock, selectAllStock, getStockStatus, getStockError,
 } from '../../redux/stock/stockSlice';
 import './stock.scss';
 
@@ -36,28 +35,30 @@ const Stock = () => {
   }
 
   return (
-    <section className="stock-list d-flex flex-column w-50 m-5">
-      <h1>Mevcut Kayıtlar</h1>
-      <div className="d-flex justify-content-between my-3">
-        <div>
-          <a href="stock/new"><Button variant="info" type="submit">Düzenle</Button></a>
-          <a href="stock/update"><Button variant="info" type="submit">Veri Girişi</Button></a>
-        </div>
-        <a href="stock/logs"><Button variant="info" type="submit">Kayıtlar</Button></a>
+    <div className="d-flex flex-column w-75">
+      <h1 className="main-heading">Mevcut Kayıtlar</h1>
+      <div className="d-flex justify-content-between my-3 ">
+
+        <a href="new"><Button variant="info" type="submit">Düzenle</Button></a>
+        <a href="update"><Button variant="info" type="submit">Veri Girişi</Button></a>
+
+        <a href="logs"><Button variant="primary" type="submit">Kayıtlar</Button></a>
       </div>
-      <Table className="table-fixed" striped bordered hover>
-        <thead>
-          <tr>
-            <th>Ürün</th>
-            <th>Miktar</th>
-            <th>Birim</th>
-          </tr>
-        </thead>
-        <tbody>
-          {content}
-        </tbody>
-      </Table>
-    </section>
+      <section className="stock-list">
+        <Table className="table-fixed" striped hover bordered>
+          <thead>
+            <tr>
+              <th>Ürün</th>
+              <th>Miktar</th>
+              <th>Birim</th>
+            </tr>
+          </thead>
+          <tbody>
+            {content}
+          </tbody>
+        </Table>
+      </section>
+    </div>
   );
 };
 

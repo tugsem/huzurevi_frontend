@@ -1,3 +1,42 @@
-.App {
-  min-height: 100vh;
+$primary-soft-grey: #F7FAFC;
+$main-heading: #1b3742;
+$second-soft-grey: #DFEBF7;
+
+*.App {
+  padding-top: 100px;
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
+  .main-heading{
+    color: $main-heading;
+  }
+  .bg-shape {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+  }
+  .stock-list {
+    max-height: calc(100vh - 300px);
+    overflow-y: auto;
+  }
+  .form-container {
+    width: 75%;
+  }
+  .stock-form {
+    gap: 10px;
+  }
+
+  .outer-circle {
+    position: absolute;
+    right: 0;
+    bottom: 50;
+  }
+  @media screen and (min-width: 768px) {
+    .form-container {
+      width: 50%;
+    }
+  }
 }

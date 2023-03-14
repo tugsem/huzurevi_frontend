@@ -29,7 +29,7 @@ const UpdateStock = () => {
           to_whom: givenTo,
           operation
         }));
-        navigate('/stock/logs')
+        navigate('/')
       } else {
      setError(true);
     }
@@ -42,13 +42,13 @@ const UpdateStock = () => {
   }
 
   return (
-    <div className='m-5 w-50'>
+    <div className="form-container">
       {error &&
       <Alert variant='danger'>
           Lütfen miktar giriniz.
         </Alert>}
       <h1>Veri Girişi</h1>
-    <Form className="d-flex flex-column" onSubmit={(e) => handleSubmit(e)}>
+    <Form className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
         <StockDropdown menu={stock} handleClick={(e) => handleItemName(e)}/>
         <Form.Group>
           <Form.Label>Miktar</Form.Label>
