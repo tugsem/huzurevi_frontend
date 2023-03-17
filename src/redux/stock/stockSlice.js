@@ -69,7 +69,7 @@ export const stockSlice = createSlice({
   },
 });
 
-export const selectAllStock = (state) => state.stock.stock;
+export const selectAllStock = (state) => Array.isArray(state.stock.stock) ? state.stock.stock : [];
 export const getStockStatus = (state) => state.stock.status;
 export const getStockError = (state) => state.stock.error;
 

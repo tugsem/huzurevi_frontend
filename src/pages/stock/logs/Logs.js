@@ -19,7 +19,6 @@ const Logs = () => {
   }, [status, dispatch]);
 
   const stockLogs = useSelector(getStockLogs);
-  console.log(stockLogs)
   let content;
   if (status === 'loading') {
     content = <tr><td>Loading...</td></tr>;

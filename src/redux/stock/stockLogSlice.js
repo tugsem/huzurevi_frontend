@@ -61,7 +61,9 @@ export const stockLogSlice = createSlice({
   },
 });
 /* eslint-enable */
-export const getStockLogs = (state) => state.stockLogs.stockLogs;
+export const getStockLogs = (state) => (Array.isArray(state.stockLogs.stockLogs)
+  ? state.stockLogs.stockLogs
+  : []);
 export const getStockLogsStatus = (state) => state.stockLogs.status;
 export const getStockLogError = (state) => state.stockLogs.error;
 
