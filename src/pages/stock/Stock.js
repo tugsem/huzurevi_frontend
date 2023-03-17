@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Table, Button, ButtonGroup } from 'react-bootstrap';
 import {
   removeStock, selectAllStock, getStockStatus,
 } from '../../redux/stock/stockSlice';
@@ -35,13 +36,17 @@ const Stock = () => {
   return (
     <div className="d-flex flex-column w-75">
       <h1 className="main-heading">Mevcut Kayıtlar</h1>
-      <div className="d-flex justify-content-between my-3 ">
-
-        <a href="new"><Button variant="info" type="submit">Düzenle</Button></a>
-        <a href="update"><Button variant="info" type="submit">Veri Girişi</Button></a>
-
-        <a href="logs"><Button variant="primary" type="submit">Kayıtlar</Button></a>
-      </div>
+      <ButtonGroup className="d-flex justify-content-between my-3">
+        <Link to="new">
+          <Button variant="info" type="submit">Düzenle</Button>
+        </Link>
+        <Link to="update">
+          <Button variant="info" type="submit">Veri Girişi</Button>
+        </Link>
+        <Link to="logs">
+          <Button variant="primary" type="submit">Kayıtlar</Button>
+        </Link>
+      </ButtonGroup>
       <section className="stock-list">
         <Table className="table-fixed" striped hover bordered>
           <thead>

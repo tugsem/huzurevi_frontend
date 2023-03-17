@@ -4,7 +4,6 @@ import { Table, Button } from 'react-bootstrap';
 import {
   fetchStockLogs, getStockLogs, getStockLogsStatus, removeStockLog,
 } from '../../../redux/stock/stockLogSlice';
-import './logs.scss';
 
 /* eslint-disable */
 

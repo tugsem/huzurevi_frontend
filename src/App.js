@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStockStatus, fetchStock } from './redux/stock/stockSlice';
-import { ReactComponent as BgShape } from './assets/big-shape.svg';
 import './app.scss';
 
 import Stock from './pages/stock/Stock';
@@ -23,7 +22,6 @@ function App() {
 
   return (
     <div className="App d-flex justify-content-center">
-      <BgShape className="bg-shape" />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Stock />} />
