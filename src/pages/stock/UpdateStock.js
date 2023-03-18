@@ -3,7 +3,7 @@ import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { selectAllStock } from '../../redux/stock/stockSlice';
+import { selectAllStock, fetchStock } from '../../redux/stock/stockSlice';
 import StockDropdown from '../../components/stockDropdown';
 import { addStockLog } from '../../redux/stock/stockLogSlice';
 
@@ -29,6 +29,7 @@ const UpdateStock = () => {
           to_whom: givenTo,
           operation
         }));
+        dispatch(fetchStock());
         navigate('/')
       } else {
      setError(true);
