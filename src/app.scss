@@ -30,8 +30,16 @@ $second-soft-grey: #dfebf7;
     gap: 10px;
   }
 
+  .stock-logs {
+    width: 100%;
+  }
+
   @media screen and (min-width: 768px) {
     .form-container {
+      width: 50%;
+    }
+
+    .stock-logs {
       width: 50%;
     }
   }

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button, Alert } from 'react-bootstrap';
 import {
   fetchStockLogs, getStockLogs, getStockLogsStatus, removeStockLog,
 } from '../../../redux/stock/stockLogSlice';
@@ -11,7 +11,7 @@ import capitalizeWords from '../../../modules/capitalizeWords';
 const Logs = () => {
   const status = useSelector(getStockLogsStatus);
   const dispatch = useDispatch();
-  const [permit, setPermit] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -19,13 +19,16 @@ const Logs = () => {
     }
   }, [status, dispatch]);
 
-  const handleDelete = () => {
-
-    if(permit){
+  const handleDelete = (id, e) => {
+    if(e.target.innerText === "Onayla") {
       dispatch(removeStockLog(id))
+      setShowAlert(false)
+      e.target.innerText = "Kaldır"
+    } else {
+       e.target.innerText = "Onayla";
+       setShowAlert(true)
     }
   }
-
   const stockLogs = useSelector(getStockLogs);
   let content;
   if (status === 'loading') {
@@ -42,7 +45,7 @@ const Logs = () => {
         </td>
         <td className="d-flex justify-content-between">
           {created_at.substring(0, 10)}
-          {<Button variant="danger" type="submit" onClick={handleDelete}>Kaldır</Button>}
+          {<Button variant="danger" className="confirm-btn" type="submit" onClick={(e) => handleDelete(id, e)}>Kaldır</Button>}
         </td>
       </tr>
     ));
@@ -51,8 +54,11 @@ const Logs = () => {
   }
 
   return (
-    <div className='stock-logs w-75'>
+    <div className='stock-logs'>
       <h1>Kayıtlar</h1>
+      {showAlert && (
+         <Alert variant="danger">Bu item silinecek</Alert>
+      )}
        <Table className="table-fixed" striped bordered hover>
         <thead>
           <tr>
