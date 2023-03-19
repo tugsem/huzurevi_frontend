@@ -1,15 +1,17 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Table, Button } from 'react-bootstrap';
 import {
   fetchStockLogs, getStockLogs, getStockLogsStatus, removeStockLog,
 } from '../../../redux/stock/stockLogSlice';
+import capitalizeWords from '../../../modules/capitalizeWords';
 
 /* eslint-disable */
 
 const Logs = () => {
   const status = useSelector(getStockLogsStatus);
   const dispatch = useDispatch();
+  const [permit, setPermit] = useState(false);
 
   useEffect(() => {
     if (status === 'idle') {
@@ -17,23 +19,30 @@ const Logs = () => {
     }
   }, [status, dispatch]);
 
+  const handleDelete = () => {
+
+    if(permit){
+      dispatch(removeStockLog(id))
+    }
+  }
+
   const stockLogs = useSelector(getStockLogs);
   let content;
   if (status === 'loading') {
     content = <tr><td>Loading...</td></tr>;
   } else if (status === 'succeeded') {
     content = stockLogs.map(({
-      id, stock_name, quantity, to_whom, created_at
+      id, stock_name, quantity, to_whom, operation, created_at
     }) => (
       <tr key={id}>
         <td>{stock_name}</td>
         <td>{quantity}</td>
         <td>
-          {to_whom}
+          {(Boolean(operation) ? "alınan: " : "alan: ").concat(capitalizeWords(to_whom))}
         </td>
         <td className="d-flex justify-content-between">
           {created_at.substring(0, 10)}
-          {<Button variant="danger" type="submit" onClick={() => dispatch(removeStockLog(id))}>Kaldır</Button>}
+          {<Button variant="danger" type="submit" onClick={handleDelete}>Kaldır</Button>}
         </td>
       </tr>
     ));
@@ -49,7 +58,7 @@ const Logs = () => {
           <tr>
             <th>Ürün</th>
             <th>Miktar</th>
-            <th>Teslim Edilen</th>
+            <th>Teslim</th>
             <th>Tarih</th>
           </tr>
         </thead>

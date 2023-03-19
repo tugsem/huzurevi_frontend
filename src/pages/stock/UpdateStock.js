@@ -3,7 +3,7 @@ import React, { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { selectAllStock, fetchStock } from '../../redux/stock/stockSlice';
+import { selectAllStock, updateStatus } from '../../redux/stock/stockSlice';
 import StockDropdown from '../../components/stockDropdown';
 import { addStockLog } from '../../redux/stock/stockLogSlice';
 
@@ -22,14 +22,14 @@ const UpdateStock = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if(quantity){
-       dispatch(addStockLog({
+        dispatch(addStockLog({
           stock_id: stockId,
           stock_name: name,
           quantity,
           to_whom: givenTo,
           operation
-        }));
-        dispatch(fetchStock());
+        }))
+        dispatch(updateStatus('idle'))
         navigate('/')
       } else {
      setError(true);
@@ -56,7 +56,7 @@ const UpdateStock = () => {
           <Form.Control type="text" onBlur={(e) => setQuantity(Number(e.target.value))} />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Teslim Alan Kişi</Form.Label>
+          <Form.Label>Teslim Alan/Alınan Kişi</Form.Label>
           <Form.Control type="text" onBlur={(e) => setGivenTo(e.target.value)} />
         </Form.Group>
         <Form.Group>

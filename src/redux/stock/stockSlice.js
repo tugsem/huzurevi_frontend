@@ -1,4 +1,4 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 const STOCK_URL = 'http://localhost:3000/api/v1/stocks/';
@@ -32,6 +32,9 @@ export const updateStockItem = createAsyncThunk('stock/updateStockItem', async (
   await axios.put(STOCK_URL + payload.id, payload);
   return payload;
 });
+
+export const updateStatus = createAction('stock/updateStatus');
+
 /* eslint-disable */
 export const stockSlice = createSlice({
   name: 'stock',
@@ -65,6 +68,9 @@ export const stockSlice = createSlice({
         const stock = state.stock.map((item) => (item.id === updatedItem.id ? updatedItem : item));
         state.stock = stock;
         state.status = 'succeeded';
+      })
+      .addCase(updateStatus, (state, action) => {
+        state.status = action.payload;
       });
   },
 });
