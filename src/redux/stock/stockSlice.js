@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk, createAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-
-const STOCK_URL = 'http://localhost:3000/api/v1/stocks/';
+import { STOCK_URL } from '../../config/api';
 
 const initialState = {
   stock: [],

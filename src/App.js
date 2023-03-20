@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { getStockStatus, fetchStock } from './redux/stock/stockSlice';
 import './app.scss';
@@ -9,8 +9,9 @@ import NewStock from './pages/stock/NewStock';
 import Logs from './pages/stock/logs/Logs';
 import UpdateStock from './pages/stock/UpdateStock';
 import UpdateItem from './pages/stock/UpdateItem';
+// import Login from './pages/Login/Login';
 
-function App() {
+const App = () => {
   const dispatch = useDispatch();
   const stockStatus = useSelector(getStockStatus);
 
@@ -22,17 +23,16 @@ function App() {
 
   return (
     <div className="App d-flex justify-content-center">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Stock />} />
-          <Route path="new" element={<NewStock />} />
-          <Route path="logs" element={<Logs />} />
-          <Route path="update" element={<UpdateStock />} />
-          <Route path="update-item" element={<UpdateItem />} />
-        </Routes>
-      </BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Stock />} />
+        <Route path="new" element={<NewStock />} />
+        <Route path="logs" element={<Logs />} />
+        <Route path="update" element={<UpdateStock />} />
+        <Route path="update-item" element={<UpdateItem />} />
+        {/* <Route path="login" element={<Login />} /> */}
+      </Routes>
     </div>
   );
-}
+};
 
 export default App;
