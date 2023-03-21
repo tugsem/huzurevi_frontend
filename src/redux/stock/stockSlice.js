@@ -53,6 +53,7 @@ export const stockSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addStock.fulfilled, (state, action) => {
+        state.status = 'idle'
         state.stock = [action.payload, ...state.stock];
       })
       .addCase(removeStock.fulfilled, (state, action) => {
@@ -66,10 +67,10 @@ export const stockSlice = createSlice({
         const updatedItem = action.payload;
         const stock = state.stock.map((item) => (item.id === updatedItem.id ? updatedItem : item));
         state.stock = stock;
-        state.status = 'succeeded';
+        state.status = 'idle';
       })
-      .addCase(updateStatus, (state, action) => {
-        state.status = action.payload;
+      .addCase(updateStatus, (state) => {
+        state.status = 'idle';
       });
   },
 });

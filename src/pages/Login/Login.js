@@ -6,7 +6,7 @@ const Login = () => {
   const [name, setName] = useState(null);
   const [pass, setPass] = useState(null);
   const handleSubmit = (e) => {
-    if (name === 'adora' && pass === 'adora5540') {
+    if (name === 'adora' && pass === 'adora8080') {
       localStorage.setItem('isLogged', true);
     } else {
       e.preventDefault();

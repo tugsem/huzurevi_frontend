@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Tab, Tabs } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,6 +11,7 @@ import './stock.scss';
 import { getStockStatus, fetchStock } from '../../redux/stock/stockSlice';
 
 const Stock = () => {
+  const [key, setKey] = useState('stocklist');
   const dispatch = useDispatch();
   const stockStatus = useSelector(getStockStatus);
 
@@ -20,27 +21,31 @@ const Stock = () => {
     }
   }, [stockStatus, dispatch]);
 
+  const handleTabChange = (key) => {
+    setKey(key);
+  };
   return (
     <div className="pt-4">
       <Tabs
-        defaultActiveKey="home"
-        id="uncontrolled-tab-example"
+        id="controlled-tab-example"
+        activeKey={key}
+        onSelect={(k) => setKey(k)}
         className="mb-3"
       >
-        <Tab eventKey="home" title="Güncel Stok">
+        <Tab eventKey="stocklist" title="Güncel Stok">
           <StockList />
         </Tab>
-        <Tab eventKey="düzenle" title="Düzenle">
-          <NewStock />
+        <Tab eventKey="addItem" title="Ürün Ekle">
+          <NewStock change={handleTabChange} />
         </Tab>
-        <Tab eventKey="veri girişi" title="Veri Giriş">
-          <UpdateStock />
+        <Tab eventKey="UpdateStock" title="Veri Girişi">
+          <UpdateStock change={handleTabChange} />
         </Tab>
-        <Tab eventKey="kayıtlar" title="Kayıtlar">
+        <Tab eventKey="Logs" title="Kayıtlar">
           <Logs />
         </Tab>
-        <Tab eventKey="Mevcut ürün düzenle" title="Mevcut ürün düzenle">
-          <UpdateItem />
+        <Tab eventKey="updateItem" title="Mevcut ürün düzenle">
+          <UpdateItem change={handleTabChange} />
         </Tab>
       </Tabs>
     </div>

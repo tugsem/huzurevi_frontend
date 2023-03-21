@@ -23,7 +23,6 @@ const Logs = () => {
     if(e.target.innerText === "Onayla") {
       dispatch(removeStockLog(id))
       setShowAlert(false)
-      e.target.innerText = "Kaldır"
     } else {
        e.target.innerText = "Onayla";
        setShowAlert(true)
@@ -41,7 +40,7 @@ const Logs = () => {
         <td>{stock_name}</td>
         <td>{quantity}</td>
         <td>
-          {(Boolean(operation) ? "alınan: " : "alan: ").concat(capitalizeWords(to_whom))}
+          {(Boolean(operation) ? "Alınan: " : "Alan: ").concat(capitalizeWords(to_whom))}
         </td>
         <td className="d-flex justify-content-between">
           {created_at.substring(0, 10)}

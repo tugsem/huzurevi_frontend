@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import propTypes from 'prop-types';
 import { Form, Button, Alert } from 'react-bootstrap';
 import { selectAllStock, updateStatus } from '../../redux/stock/stockSlice';
 import StockDropdown from '../../components/stockDropdown';
 import { addStockLog } from '../../redux/stock/stockLogSlice';
 
-const UpdateStock = () => {
+const UpdateStock = ({ change }) => {
   const [stockId, setStockId] = useState(null);
   const [name, setName] = useState(null);
   const [quantity, setQuantity] = useState(null);
@@ -14,13 +14,21 @@ const UpdateStock = () => {
   const [operation, setOperation] = useState(null);
   const [error, setError] = useState(false);
 
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
-  const stock = useSelector(selectAllStock);
+  const resetForm = () => {
+    setStockId(null);
+    setError(false);
+    setName(null);
+    setQuantity(null);
+    setOperation(null);
+  };
 
+  const dispatch = useDispatch();
+  const formRef = useRef(null);
+  const stock = useSelector(selectAllStock);
+  const canSave = stockId && name && quantity && operation;
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (quantity) {
+    if (canSave) {
       dispatch(addStockLog({
         stock_id: stockId,
         stock_name: name,
@@ -28,8 +36,10 @@ const UpdateStock = () => {
         to_whom: givenTo,
         operation,
       }));
-      dispatch(updateStatus('idle'));
-      navigate('/');
+      resetForm();
+      formRef.current.reset();
+      dispatch(updateStatus());
+      change('stocklist');
     } else {
       setError(true);
     }
@@ -45,20 +55,20 @@ const UpdateStock = () => {
     <div className="form-container">
       {error
       && (
-      <Alert variant="danger">
-        Lütfen miktar giriniz.
+      <Alert variant="danger" className="mt-2">
+        Lütfen bilgileri giriniz.
       </Alert>
       )}
       <h1>Veri Girişi</h1>
-      <Form className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
+      <Form ref={formRef} className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
         <StockDropdown menu={stock} handleClick={(e) => handleItemName(e)} />
         <Form.Group>
           <Form.Label>Miktar</Form.Label>
           <Form.Control type="text" placeholder="Miktar" onBlur={(e) => setQuantity(Number(e.target.value))} />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Kişi</Form.Label>
-          <Form.Control type="text" placeholder="Teslim Alan/Alınan Kişi(opsiyonel)" onBlur={(e) => setGivenTo(e.target.value)} />
+          <Form.Label>Kişi (opsiyonel)</Form.Label>
+          <Form.Control type="text" placeholder="Teslim Alan/Alınan Kişi" onBlur={(e) => setGivenTo(e.target.value)} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Operasyon</Form.Label>
@@ -76,3 +86,7 @@ const UpdateStock = () => {
   );
 };
 export default UpdateStock;
+
+UpdateStock.propTypes = {
+  change: propTypes.func.isRequired,
+};
