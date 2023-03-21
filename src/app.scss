@@ -3,11 +3,15 @@ $main-heading: #1b3742;
 $second-soft-grey: #dfebf7;
 
 *.App {
-  padding-top: 100px;
   background-image: url('./assets/big-shape.svg');
   min-height: 100vh;
   background-size: contain;
   background-repeat: no-repeat;
+
+  .login-form {
+    min-height: 100vh;
+    justify-content: center;
+  }
 
   ::-webkit-scrollbar {
     display: none;
@@ -15,32 +19,5 @@ $second-soft-grey: #dfebf7;
 
   .main-heading {
     color: $main-heading;
-  }
-
-  .stock-list {
-    max-height: calc(100vh - 300px);
-    overflow-y: auto;
-  }
-
-  .form-container {
-    width: 75%;
-  }
-
-  .stock-form {
-    gap: 10px;
-  }
-
-  .stock-logs {
-    width: 100%;
-  }
-
-  @media screen and (min-width: 768px) {
-    .form-container {
-      width: 50%;
-    }
-
-    .stock-logs {
-      width: 50%;
-    }
   }
 }

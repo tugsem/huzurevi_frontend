@@ -1,5 +1,4 @@
-/* eslint-disable */
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
@@ -8,12 +7,12 @@ import StockDropdown from '../../components/stockDropdown';
 import { addStockLog } from '../../redux/stock/stockLogSlice';
 
 const UpdateStock = () => {
-  const [stockId, setStockId] = useState(null)
+  const [stockId, setStockId] = useState(null);
   const [name, setName] = useState(null);
-  const[quantity, setQuantity] = useState(null);
+  const [quantity, setQuantity] = useState(null);
   const [givenTo, setGivenTo] = useState('');
   const [operation, setOperation] = useState(null);
-  const [error, setError] = useState(false)
+  const [error, setError] = useState(false);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -21,36 +20,38 @@ const UpdateStock = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if(quantity){
-        dispatch(addStockLog({
-          stock_id: stockId,
-          stock_name: name,
-          quantity,
-          to_whom: givenTo,
-          operation
-        }))
-        dispatch(updateStatus('idle'))
-        navigate('/')
-      } else {
-     setError(true);
+    if (quantity) {
+      dispatch(addStockLog({
+        stock_id: stockId,
+        stock_name: name,
+        quantity,
+        to_whom: givenTo,
+        operation,
+      }));
+      dispatch(updateStatus('idle'));
+      navigate('/');
+    } else {
+      setError(true);
     }
-  }
+  };
   const handleItemName = (e) => {
-    let id = e.target.selectedIndex;
-    let stock_name = e.target[id].text;
+    const id = e.target.selectedIndex;
+    const stockName = e.target[id].text;
     setStockId(e.target.value);
-    setName(stock_name);
-  }
+    setName(stockName);
+  };
 
   return (
     <div className="form-container">
-      {error &&
-      <Alert variant='danger'>
-          Lütfen miktar giriniz.
-        </Alert>}
+      {error
+      && (
+      <Alert variant="danger">
+        Lütfen miktar giriniz.
+      </Alert>
+      )}
       <h1>Veri Girişi</h1>
-    <Form className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
-        <StockDropdown menu={stock} handleClick={(e) => handleItemName(e)}/>
+      <Form className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
+        <StockDropdown menu={stock} handleClick={(e) => handleItemName(e)} />
         <Form.Group>
           <Form.Label>Miktar</Form.Label>
           <Form.Control type="text" onBlur={(e) => setQuantity(Number(e.target.value))} />
@@ -62,16 +63,16 @@ const UpdateStock = () => {
         <Form.Group>
           <Form.Label>Operasyon</Form.Label>
           <Form.Select onChange={(e) => setOperation(e.target.value)}>
-            <option></option>
+            <option>Seçiniz</option>
             <option value={1}>Veri girişi</option>
             <option value={0}>Veri çıkışı</option>
           </Form.Select>
         </Form.Group>
-        <Button variant="info" type="submit">
+        <Button variant="info" type="submit" className="mt-3">
           Kaydet
         </Button>
       </Form>
-      </div>
+    </div>
   );
 };
 export default UpdateStock;

@@ -1,12 +1,10 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addStock } from '../../redux/stock/stockSlice';
 import capitalizeWords from '../../modules/capitalizeWords';
 
 const NewStock = () => {
-  const navigate = useNavigate();
   const [showError, setShowError] = useState(false);
   const [name, setName] = useState(null);
   const [quantity, setQuantity] = useState(null);
@@ -26,7 +24,6 @@ const NewStock = () => {
           unit,
         }),
       );
-      navigate('/');
     } else {
       setShowError(true);
     }
@@ -34,9 +31,7 @@ const NewStock = () => {
 
   return (
     <section className="form-container">
-
       <h1 className="main-heading">Yeni Ürün Kaydı</h1>
-      <a href="update-item">Mevcut Ürünü Düzenle</a>
       <Form className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
         <Form.Group required>
           <Form.Label>Ürün </Form.Label>
@@ -56,7 +51,7 @@ const NewStock = () => {
           </Form.Select>
         </Form.Group>
         {showError && <Alert variant="danger">Lütfen gerekli yerleri doldurunuz.</Alert>}
-        <Button variant="info" type="submit">
+        <Button variant="info" type="submit" className="mt-3">
           Kaydet
         </Button>
       </Form>
