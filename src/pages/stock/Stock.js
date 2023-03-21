@@ -1,66 +1,48 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { Table, Button, ButtonGroup } from 'react-bootstrap';
-import {
-  removeStock, selectAllStock, getStockStatus,
-} from '../../redux/stock/stockSlice';
+import React, { useEffect } from 'react';
+import { Tab, Tabs } from 'react-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+
+import StockList from './StockList';
+import NewStock from './NewStock';
+import Logs from './logs/Logs';
+import UpdateStock from './UpdateStock';
+import UpdateItem from './UpdateItem';
 import './stock.scss';
+import { getStockStatus, fetchStock } from '../../redux/stock/stockSlice';
 
 const Stock = () => {
   const dispatch = useDispatch();
-
-  const stock = useSelector(selectAllStock);
   const stockStatus = useSelector(getStockStatus);
 
-  let content;
-  if (stockStatus === 'loading') {
-    content = <tr><td>Loading...</td></tr>;
-  } else if (stockStatus === 'succeeded') {
-    content = Array.isArray(stock)
-      ? stock.map(({
-        id, name, quantity, unit,
-      }) => (
-        <tr key={id} className={quantity === 0 ? 'hg-row' : ''}>
-          <td>{name}</td>
-          <td>{quantity}</td>
-          <td className="d-flex justify-content-between">
-            {unit}
-            {quantity === 0
-          && <Button variant="danger" type="submit" onClick={() => dispatch(removeStock(id))}>Kaldır</Button>}
-          </td>
-        </tr>
-      )) : null;
-  }
+  useEffect(() => {
+    if (stockStatus === 'idle') {
+      dispatch(fetchStock());
+    }
+  }, [stockStatus, dispatch]);
 
   return (
-    <div className="d-flex flex-column w-75">
-      <h1 className="main-heading">Mevcut Kayıtlar</h1>
-      <ButtonGroup className="d-flex justify-content-between my-3">
-        <Link to="new">
-          <Button variant="info" type="submit">Düzenle</Button>
-        </Link>
-        <Link to="update">
-          <Button variant="info" type="submit">Veri Girişi</Button>
-        </Link>
-        <Link to="logs">
-          <Button variant="primary" type="submit">Kayıtlar</Button>
-        </Link>
-      </ButtonGroup>
-      <section className="stock-list">
-        <Table className="table-fixed" striped hover bordered>
-          <thead>
-            <tr>
-              <th>Ürün</th>
-              <th>Miktar</th>
-              <th>Birim</th>
-            </tr>
-          </thead>
-          <tbody>
-            {content}
-          </tbody>
-        </Table>
-      </section>
+    <div className="pt-4">
+      <Tabs
+        defaultActiveKey="home"
+        id="uncontrolled-tab-example"
+        className="mb-3"
+      >
+        <Tab eventKey="home" title="Güncel Stok">
+          <StockList />
+        </Tab>
+        <Tab eventKey="düzenle" title="Düzenle">
+          <NewStock />
+        </Tab>
+        <Tab eventKey="veri girişi" title="Veri Giriş">
+          <UpdateStock />
+        </Tab>
+        <Tab eventKey="kayıtlar" title="Kayıtlar">
+          <Logs />
+        </Tab>
+        <Tab eventKey="Mevcut ürün düzenle" title="Mevcut ürün düzenle">
+          <UpdateItem />
+        </Tab>
+      </Tabs>
     </div>
   );
 };

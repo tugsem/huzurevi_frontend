@@ -67,7 +67,7 @@ const UpdateItem = () => {
           </Form.Select>
         </Form.Group>
         {showError && <Alert variant="danger">Lütfen gerekli yerleri doldurunuz.</Alert>}
-        <Button variant="info" type="submit">
+        <Button variant="info" type="submit" className="mt-3">
           Kaydet
         </Button>
       </Form>
