@@ -13,7 +13,7 @@ const StockDropdown = ({menu, handleClick}) => {
     <Form.Group>
       <Form.Label>Ürün seçiniz</Form.Label>
       <Form.Select onChange={handleClick}>
-        <option></option>
+        <option value={null}>Seçiniz</option>
         {list}
       </Form.Select>
     </Form.Group>

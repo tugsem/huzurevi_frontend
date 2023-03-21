@@ -50,12 +50,12 @@ const UpdateItem = () => {
       <Form className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
         <StockDropdown menu={stock} handleClick={(e) => setId(e.target.value)} />
         <Form.Group required>
-          <Form.Label>Yeni ürün ismi</Form.Label>
-          <Form.Control type="text" onBlur={(e) => setName(e.target.value)} />
+          <Form.Label>İsim</Form.Label>
+          <Form.Control type="text" placeholder="Yeni ürün ismi" onBlur={(e) => setName(e.target.value)} />
         </Form.Group>
         <Form.Group required>
           <Form.Label>Miktar</Form.Label>
-          <Form.Control type="text" onBlur={(e) => setQuantity(Number(e.target.value))} />
+          <Form.Control type="text" placeholder="Miktar" onBlur={(e) => setQuantity(Number(e.target.value))} />
         </Form.Group>
         <Form.Group required>
           <Form.Label>Birim</Form.Label>

@@ -54,16 +54,16 @@ const UpdateStock = () => {
         <StockDropdown menu={stock} handleClick={(e) => handleItemName(e)} />
         <Form.Group>
           <Form.Label>Miktar</Form.Label>
-          <Form.Control type="text" onBlur={(e) => setQuantity(Number(e.target.value))} />
+          <Form.Control type="text" placeholder="Miktar" onBlur={(e) => setQuantity(Number(e.target.value))} />
         </Form.Group>
         <Form.Group>
-          <Form.Label>Teslim Alan/Alınan Kişi</Form.Label>
-          <Form.Control type="text" onBlur={(e) => setGivenTo(e.target.value)} />
+          <Form.Label>Kişi</Form.Label>
+          <Form.Control type="text" placeholder="Teslim Alan/Alınan Kişi(opsiyonel)" onBlur={(e) => setGivenTo(e.target.value)} />
         </Form.Group>
         <Form.Group>
           <Form.Label>Operasyon</Form.Label>
           <Form.Select onChange={(e) => setOperation(e.target.value)}>
-            <option>Seçiniz</option>
+            <option value={null}>Seçiniz</option>
             <option value={1}>Veri girişi</option>
             <option value={0}>Veri çıkışı</option>
           </Form.Select>
