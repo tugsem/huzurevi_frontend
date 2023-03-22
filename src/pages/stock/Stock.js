@@ -38,14 +38,14 @@ const Stock = () => {
         <Tab eventKey="addItem" title="Ürün Ekle">
           <NewStock change={handleTabChange} />
         </Tab>
+        <Tab eventKey="updateItem" title="Ürünü düzenle">
+          <UpdateItem change={handleTabChange} />
+        </Tab>
         <Tab eventKey="UpdateStock" title="Veri Girişi">
           <UpdateStock change={handleTabChange} />
         </Tab>
         <Tab eventKey="Logs" title="Kayıtlar">
           <Logs />
-        </Tab>
-        <Tab eventKey="updateItem" title="Mevcut ürün düzenle">
-          <UpdateItem change={handleTabChange} />
         </Tab>
       </Tabs>
     </div>
