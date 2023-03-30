@@ -7,7 +7,7 @@ const Navbar = () => (
     <nav className="navbar">
       <ul className="d-flex flex-column p-4">
         <li>
-          <Link to="/">Hasta bakım formu</Link>
+          <Link to="/patients">Hasta bakım formu</Link>
         </li>
         <li>
           <Link to="/add-patient">Hasta Kayıt</Link>
