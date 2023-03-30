@@ -1,7 +1,9 @@
 import React from 'react';
 
 const AdminDashboard = () => (
-  <div className="navbar" />
+  <div>
+    <h1>Admin Dashboard</h1>
+  </div>
 );
 
 export default AdminDashboard;
