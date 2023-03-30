@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './app.scss';
 
-import Stock from './pages/stock/Stock';
+//import Stock from './pages/stock/Stock';
 import Login from './pages/Login/Login';
+import PatientList from './pages/patient/PatientList';
 
 const App = () => {
   const isLogged = localStorage.getItem('isLogged') || 0;
@@ -13,7 +14,7 @@ const App = () => {
     <div className="App d-flex justify-content-center">
       <Routes>
         {isLogged ? (
-           <Route index path="/" element={<Stock />} />
+           <Route index path="/" element={<PatientList />} />
         ) : (<Route index path="/" element={<Login />} />)
       }
       </Routes>

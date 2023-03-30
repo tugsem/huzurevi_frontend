@@ -1,14 +1,7 @@
 @import "~bootstrap/scss/bootstrap";
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-
-  body {
-    min-height: 100vh;
-    font-family: 'Titillium Web', sans-serif;
-    font-weight: 600;
-    // overflow-x: hidden;
+:root {
+  --primary-color: #f7fafc;
+  --main-heading: #1b3742;
+  --secondary-color: #dfebf7;
+  --popup-background: #10164d;
   }
-}

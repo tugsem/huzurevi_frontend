@@ -1,12 +1,20 @@
-$primary-soft-grey: #f7fafc;
-$main-heading: #1b3742;
-$second-soft-grey: #dfebf7;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 
-*.App {
+  body {
+    min-height: 100vh;
+    font-family: 'Titillium Web', sans-serif;
+    font-weight: 600;
+  }
+}
+.App {
   background-image: url('./assets/big-shape.svg');
   min-height: 100vh;
   background-size: contain;
   background-repeat: no-repeat;
+  color:var(--main-heading);
 
   .login-form {
     min-height: 100vh;
@@ -18,6 +26,6 @@ $second-soft-grey: #dfebf7;
   }
 
   .main-heading {
-    color: $main-heading;
+    color: var(--main-heading)
   }
 }
