@@ -24,24 +24,22 @@ const patients = [
     name: 'Dostoyevski',
     picture: 'https://cdn-icons-png.flaticon.com/512/1430/1430453.png',
   },
-  {
-    id: 5,
-    name: 'Donatella',
-    picture: 'https://cdn-icons-png.flaticon.com/512/1430/1430453.png',
-  },
 ];
 
 const PatientList = () => {
   const [searchResults, setSearchResults] = useState(patients);
   const [search, setSearch] = useState('');
   const [popupVisibility, setPopupVisibility] = useState(false);
-  const [id, setId] = useState(null);
   const [name, setName] = useState(null);
 
   const handlePatient = (e) => {
-    setId(e.target.key);
-    setName(e.target.children[1].innerText);
+    const textValue = e.target.innerText;
+    setName(textValue);
     setPopupVisibility(true);
+  };
+
+  const handleClose = () => {
+    setPopupVisibility(false);
   };
 
   useEffect(() => {
@@ -56,14 +54,19 @@ const PatientList = () => {
 
   return (
     <div className="patient-container d-flex flex-column align-items-center pt-4">
-      {popupVisibility && <PopupWindow id={id} name={name} />}
+      {popupVisibility && <PopupWindow name={name} closePopup={handleClose} />}
       <form className="patient-search-box w-100 d-flex justify-content-center">
         <input className="search-field p-2 my-3" type="search" placeholder="Hasta ara" aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
       </form>
       <ul className="patient-list">
         {searchResults.map((patient) => (
-          <li key={patient.id} onClick={handlePatient} onKeyDown={handlePatient} role="presentation">
-            <Patient id={patient.id} name={patient.name} img={patient.picture} />
+          <li key={patient.id}>
+            <Patient
+              id={patient.id}
+              name={patient.name}
+              img={patient.picture}
+              openPopup={handlePatient}
+            />
           </li>
         ))}
       </ul>
