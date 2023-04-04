@@ -41,7 +41,6 @@ const NewStock = ({ change }) => {
 
   return (
     <section className="form-container">
-      <h1 className="main-heading">Yeni Ürün Kaydı</h1>
       <Form ref={formRef} className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
         <Form.Group required>
           <Form.Label>Ürün </Form.Label>

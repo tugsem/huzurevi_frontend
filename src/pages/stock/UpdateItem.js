@@ -51,13 +51,19 @@ const UpdateItem = ({ change }) => {
       change('stocklist');
     } else {
       setError(true);
+      console.log(id, quantity, unit);
     }
   };
   return (
     <div className="form-container">
-      <h1 className="main-heading"> Mevcut Ürünü Düzenle</h1>
       <Form ref={formRef} className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
-        <StockDropdown menu={stock} handleClick={(e) => setId(e.target.value)} />
+        <StockDropdown
+          options={stock.map((item) => ({
+            value: item.id,
+            name: item.name,
+          }))}
+          handleClick={({ value }) => setId(value)}
+        />
         <Form.Group required>
           <Form.Label>İsim</Form.Label>
           <Form.Control type="text" placeholder="Yeni isim" defaultValue="" onBlur={(e) => setName(e.target.value)} />

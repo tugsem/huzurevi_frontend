@@ -44,11 +44,9 @@ const UpdateStock = ({ change }) => {
       setError(true);
     }
   };
-  const handleItemName = (e) => {
-    const id = e.target.selectedIndex;
-    const stockName = e.target[id].text;
-    setStockId(e.target.value);
-    setName(stockName);
+  const handleItemName = (val, name) => {
+    setStockId(val);
+    setName(name);
   };
 
   return (
@@ -59,9 +57,14 @@ const UpdateStock = ({ change }) => {
         Lütfen bilgileri giriniz.
       </Alert>
       )}
-      <h1>Veri Girişi</h1>
       <Form ref={formRef} className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
-        <StockDropdown menu={stock} handleClick={(e) => handleItemName(e)} />
+        <StockDropdown
+          options={stock.map((item) => ({
+            value: item.id,
+            name: item.name,
+          }))}
+          handleClick={({ value, name }) => handleItemName(value, name)}
+        />
         <Form.Group>
           <Form.Label>Miktar</Form.Label>
           <Form.Control type="text" placeholder="Miktar" onBlur={(e) => setQuantity(Number(e.target.value))} />

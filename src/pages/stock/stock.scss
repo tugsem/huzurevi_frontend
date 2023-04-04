@@ -1,18 +1,60 @@
-*.stock-list {
-  .hg-row {
-    background-color: rgba(255, 0, 0, 0.171);
+*.stock {
+  .btn.btn-info {
+    color: #fff;
+    font-size: 18px;
+  }
+
+  button.nav-link {
+    color: #1b3742;
+    font-size: 18px;
+  }
+
+  button.nav-link.active {
+    background-color: #fff;
+    color: #666666a8;
+  }
+
+  .pagination li {
+    a {
+      text-decoration: none;
+      color: #1b3742;
+    }
+
+    padding: 18px;
+    width: 20px;
+    font-size: 0.8rem;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 100%;
+    border: 1px solid #ced4da;
+  }
+
+  .page.active {
+    a {
+      color: #fff;
+    }
+
+    background-color: #59bad9;
   }
 
   .stock-list {
-    max-height: calc(100vh - 300px);
-    overflow-y: auto;
-  }
+    .hg-row {
+      background-color: rgba(255, 0, 0, 0.171);
+    }
 
-  .stock-form {
-    gap: 10px;
-  }
+    .stock-list {
+      max-height: calc(100vh - 300px);
+      overflow-y: auto;
+    }
 
-  .stock-logs {
-    width: 100%;
+    .stock-form {
+      gap: 10px;
+    }
+
+    .stock-logs {
+      width: 100%;
+    }
   }
 }
