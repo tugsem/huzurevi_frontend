@@ -115,21 +115,22 @@ const Logs = () => {
             </div>
           </Alert>
         </div>
-
       )}
-       <Table className="table-fixed" striped bordered hover>
-        <thead>
-          <tr>
-            <th>Ürün</th>
-            <th>Miktar</th>
-            <th>Teslim</th>
-            <th>Tarih</th>
-          </tr>
-        </thead>
-        <tbody>
-          {content}
-        </tbody>
-      </Table>
+      <div className="table-container">
+        <Table className="table-fixed" striped bordered hover>
+          <thead>
+            <tr>
+              <th>Ürün</th>
+              <th>Miktar</th>
+              <th>Teslim</th>
+              <th>Tarih</th>
+            </tr>
+          </thead>
+          <tbody>
+            {content}
+          </tbody>
+        </Table>
+      </div>
       <ReactPaginate
         activeClassName= "page active"
         containerClassName='pagination d-flex justify-content-around'

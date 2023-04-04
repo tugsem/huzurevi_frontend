@@ -16,17 +16,16 @@
 
   .pagination li {
     a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
       text-decoration: none;
       color: #1b3742;
+      padding: 18px;
+      width: 20px;
+      height: 20px;
     }
 
-    padding: 18px;
-    width: 20px;
-    font-size: 0.8rem;
-    height: 20px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     border-radius: 100%;
     border: 1px solid #ced4da;
   }
