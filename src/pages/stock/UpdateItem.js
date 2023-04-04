@@ -51,7 +51,6 @@ const UpdateItem = ({ change }) => {
       change('stocklist');
     } else {
       setError(true);
-      console.log(id, quantity, unit);
     }
   };
   return (
