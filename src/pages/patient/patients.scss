@@ -1,0 +1,84 @@
+.patient-container {
+  width: 75%;
+
+  .search-field{
+    width: 100%;
+    border-radius: 10px;
+    border: none;
+  }
+  .patient-list{
+    padding: 0;
+    width: 100%;
+    display: grid;
+    gap: 30px;
+    list-style-type: none;
+  }
+  .patient {
+    border: 2px solid var(--secondary-color);
+    background-color: var(--primary-color);
+    padding: 10px;
+    border-radius: 10px;
+    .patient-picture {
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+    }
+    .patient-name {
+      margin: 0;
+      width: max-content;
+      padding-left: 10px;
+      border-left:2px solid var(--secondary-color);
+    }
+  }
+  .patient:hover{
+    background-color: var(--secondary-color);
+  }
+
+  .popup{
+    position: absolute;
+    background-color: var(--popup-background);
+    color: var(--primary-color);
+    border-radius: 10px;
+    width: 75%;
+    height: 75%;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    .note-container {
+      height: 500px;
+    }
+    .patient-notes {
+      list-style-type: none;
+      flex-grow: 1;
+      overflow: scroll;
+      padding: 0;
+      gap: 30px;
+    }
+    .patient-notes  >* {
+      width: max-content;
+      color: var(--main-heading);
+      padding: 0 10px;
+      border-top-right-radius: 10px;
+      border-bottom-right-radius: 10px;
+      background-color: var(--primary-color);
+    }
+    .note-form{
+      align-self: flex-end;
+    }
+  }
+  @media only screen and (min-width: 680px) {
+    .search-field{
+      width: 75%;
+    }
+    .patient-list {
+      grid-template-columns: repeat(2, auto);
+    }
+    .popup {
+      width: 75%;
+    }
+  }
+
+}
+
