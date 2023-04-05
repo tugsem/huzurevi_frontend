@@ -25,12 +25,12 @@ const Stock = () => {
     setKey(key);
   };
   return (
-    <div className="pt-4">
+    <div className="stock">
       <Tabs
         id="controlled-tab-example"
         activeKey={key}
         onSelect={(k) => setKey(k)}
-        className="mb-3"
+        className="my-2"
       >
         <Tab eventKey="stocklist" title="Güncel Stok">
           <StockList />
@@ -38,7 +38,7 @@ const Stock = () => {
         <Tab eventKey="addItem" title="Ürün Ekle">
           <NewStock change={handleTabChange} />
         </Tab>
-        <Tab eventKey="updateItem" title="Ürünü düzenle">
+        <Tab eventKey="updateItem" title="Ürün Düzenle">
           <UpdateItem change={handleTabChange} />
         </Tab>
         <Tab eventKey="UpdateStock" title="Veri Girişi">

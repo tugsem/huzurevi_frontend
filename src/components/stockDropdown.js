@@ -1,22 +1,17 @@
 /* eslint-disable */
 import React from 'react';
-import { Form } from 'react-bootstrap';
+import Select from 'react-select';
 
-
-const StockDropdown = ({menu, handleClick}) => {
-   const list = menu.map(({ id, name }) => (
-    <option key={id} value={id}>
-      {name}
-    </option>
-  ));
+const StockDropdown = ({options, handleClick}) => {
   return (
-    <Form.Group>
-      <Form.Label>Ürün seçiniz</Form.Label>
-      <Form.Select onChange={handleClick}>
-        <option value={null}>Seçiniz</option>
-        {list}
-      </Form.Select>
-    </Form.Group>
+    <Select
+      options={options}
+      placeholder="Ürün ara"
+      getOptionLabel={option => option.name}
+      getOptionValue={option => option.value}
+      onChange={(option)=>handleClick({value: option.value, name: option.name })}
+      className="my-2"
+    />
   );
 };
 
