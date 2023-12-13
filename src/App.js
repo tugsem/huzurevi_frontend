@@ -1,5 +1,5 @@
 /* eslint-disable */
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './app.scss';
 
@@ -12,8 +12,22 @@ import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminNavbar from './pages/navbar/AdminNavbar';
 
 const App = () => {
-  const logged = localStorage.getItem('isLogged') || 0;
-  const user = 'none'; //user türünü cookies ile al.
+const [authenticated, setAuthenticated] = useState(false);
+// const [currentUser, setCurrentUser] = useState(null);
+
+useEffect(() => {
+  console.log(authenticated)
+  fetch('/me').then((res)=> {
+    if (res.ok) {
+      return res.json().then(()=> {
+        // setCurrentUser(user);
+        setAuthenticated((prev) => {
+          prev = !prev
+        });
+      })
+    }
+  })
+}, [])
 
   return (
     <div className="App d-flex justify-content-center">
