@@ -1,39 +1,44 @@
 /* eslint-disable */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState} from 'react';
 import { Routes, Route } from 'react-router-dom';
 import './app.scss';
 
 import Stock from './pages/stock/Stock';
 import AddPatient from './pages/patient/AddPatient';
-import Login from './pages/Login/AdminLogin';
+import Login from './pages/Login/Login';
 import PatientList from './pages/patient/PatientList';
-import UserLogin from './pages/Login/UserLogin';
 import AdminDashboard from './pages/Admin/AdminDashboard';
 import AdminNavbar from './pages/navbar/AdminNavbar';
+import { USER_URL } from './config/api';
+import SignupForm from './pages/SignUpForm';
 
 const App = () => {
-const [authenticated, setAuthenticated] = useState(false);
-// const [currentUser, setCurrentUser] = useState(null);
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+const [currentUser, setCurrentUser] = useState(null);
 
-useEffect(() => {
-  console.log(authenticated)
-  fetch('/me').then((res)=> {
-    if (res.ok) {
-      return res.json().then(()=> {
-        // setCurrentUser(user);
-        setAuthenticated((prev) => {
-          prev = !prev
-        });
-      })
+useEffect(()=>{
+  fetch(USER_URL).then((res) => {
+    if(res.ok) {
+      res.json().then(() => {
+        setIsAuthenticated(true);
+    }) } else {
+      setIsAuthenticated(false);
     }
   })
-}, [])
+}, [currentUser]);
 
+if (!isAuthenticated) {
+  return (
+    <Routes>
+    <Route index path='/' element={<Login setCurrentUser={setCurrentUser}/>} />
+    <Route path='/signup' element={<SignupForm setCurrentUser={setCurrentUser}/>} />
+  </Routes>
+  )
+}
   return (
     <div className="App d-flex justify-content-center">
-      {user === 'admin' ? (
           <>
-          <AdminNavbar />
+          <AdminNavbar/>
               <Routes>
                 <Route path='/' element={<AdminDashboard />} />
                 <Route path='/patients' element={<PatientList />} />
@@ -41,17 +46,6 @@ useEffect(() => {
                 <Route path='/stock' element={<Stock />} />
               </Routes>
           </>
-        ) : user === 'user' ? (
-        <Routes>
-          <Route path='/' element={<PatientList />} />
-        </Routes>
-      ) : (
-        <Routes>
-          <Route path='/' element={<UserLogin />} />
-          <Route path='/admin' element={<Login />} />
-        </Routes>
-      )
-    }
     </div>
   )
 };

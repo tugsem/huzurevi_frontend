@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LOGIN_URL } from '../../config/api';
 
-const Login = () => {
-  const navigate = useNavigate();
+const Login = ({ setCurrentUser }) => {
   const [formData, setFormData] = useState({
     username: '',
     password: '',
   });
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
 
   const handleChange = (e) => {
     setFormData({
@@ -26,14 +26,10 @@ const Login = () => {
       body: JSON.stringify(formData),
     }).then((res) => {
       if (res.ok) {
-        console.log(res.status);
-        navigate('/stocks');
+        res.json().then((user) => setCurrentUser(user));
       } else {
-        console.log(res.status);
-        res.json().then((errors) => {
-          console.log(errors);
-          setError(true);
-        });
+        setErrorMessage('Invalid credentials');
+        setError(true);
       }
     });
   };
@@ -51,8 +47,11 @@ const Login = () => {
         <Button variant="info" type="submit" className="my-2">
           Giriş Yap
         </Button>
-        {error && <Alert variant="danger">Lütfen doğru bilgileri giriniz.</Alert>}
       </Form>
+      <Link to="/signup">Hesap oluştur.</Link>
+      { (error) && (
+        <Alert variant="danger">{errorMessage}</Alert>
+      )}
     </div>
   );
 };
