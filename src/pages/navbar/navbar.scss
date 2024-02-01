@@ -1,7 +1,11 @@
 nav {
-  background-color: aqua;
-
+  background-color: rgb(124, 138, 204);
+  color: white;
+  height: 100vh;
   ul {
     list-style-type: none;
+  }
+  ul > li > * {
+    color: white;
   }
 }

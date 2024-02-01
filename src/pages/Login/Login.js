@@ -1,9 +1,12 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { useNavigate, Link } from 'react-router-dom';
 import { Form, Button, Alert } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 import { LOGIN_URL } from '../../config/api';
 
-const Login = ({ setCurrentUser }) => {
+const Login = ({ setCurrentUser, setIsAuthenticated }) => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({
     username: '',
     password: '',
@@ -26,7 +29,11 @@ const Login = ({ setCurrentUser }) => {
       body: JSON.stringify(formData),
     }).then((res) => {
       if (res.ok) {
-        res.json().then((user) => setCurrentUser(user));
+        res.json().then((user) => {
+          setCurrentUser(user);
+          setIsAuthenticated(true);
+          navigate('/');
+        });
       } else {
         setErrorMessage('Invalid credentials');
         setError(true);
@@ -48,7 +55,7 @@ const Login = ({ setCurrentUser }) => {
           Giriş Yap
         </Button>
       </Form>
-      <Link to="/signup">Hesap oluştur.</Link>
+      <Link to="/signup">Hesap oluştur</Link>
       { (error) && (
         <Alert variant="danger">{errorMessage}</Alert>
       )}
@@ -57,3 +64,8 @@ const Login = ({ setCurrentUser }) => {
 };
 
 export default Login;
+
+Login.propTypes = {
+  setCurrentUser: PropTypes.func.isRequired,
+  setIsAuthenticated: PropTypes.func.isRequired,
+};

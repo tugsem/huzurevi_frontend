@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
 import { SIGNUP_URL } from '../config/api';
 
 const SignupForm = ({ setCurrentUser }) => {
+  const navigate = useNavigate();
   const [error, setError] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
   const [formData, setFormData] = useState({
@@ -29,7 +31,8 @@ const SignupForm = ({ setCurrentUser }) => {
       body: JSON.stringify(userCreds),
     }).then((res) => {
       if (res.ok) {
-        res.json().then((user) =>setCurrentUser(user));
+        res.json().then((user) => setCurrentUser(user));
+        navigate('/');
       } else {
         res.json().then((errors) => {
           setError(true);

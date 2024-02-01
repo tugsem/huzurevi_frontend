@@ -8,46 +8,59 @@ import AddPatient from './pages/patient/AddPatient';
 import Login from './pages/Login/Login';
 import PatientList from './pages/patient/PatientList';
 import AdminDashboard from './pages/Admin/AdminDashboard';
-import AdminNavbar from './pages/navbar/AdminNavbar';
+import Navbar from './pages/navbar/Navbar';
 import { USER_URL } from './config/api';
 import SignupForm from './pages/SignUpForm';
+import UserNavbar from './pages/navbar/UserNavbar';
 
 const App = () => {
 const [isAuthenticated, setIsAuthenticated] = useState(false);
-const [currentUser, setCurrentUser] = useState(null);
+const [currentUser, setCurrentUser] = useState('');
 
 useEffect(()=>{
   fetch(USER_URL).then((res) => {
     if(res.ok) {
-      res.json().then(() => {
-        setIsAuthenticated(true);
-    }) } else {
-      setIsAuthenticated(false);
+      res.json().then((user) => {
+        setCurrentUser(user);
+        setIsAuthenticated(true)
+      })
     }
   })
-}, [currentUser]);
+}, [setCurrentUser]);
 
-if (!isAuthenticated) {
+  if (!isAuthenticated) {
   return (
     <Routes>
-    <Route index path='/' element={<Login setCurrentUser={setCurrentUser}/>} />
-    <Route path='/signup' element={<SignupForm setCurrentUser={setCurrentUser}/>} />
+      <Route path='/' element={<Login setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>} />
+      <Route path='/signup' element={<SignupForm setCurrentUser={setCurrentUser}/>} />
   </Routes>
   )
-}
+} // admin panel
+  if (currentUser?.admin) {
   return (
-    <div className="App d-flex justify-content-center">
-          <>
-          <AdminNavbar/>
-              <Routes>
-                <Route path='/' element={<AdminDashboard />} />
-                <Route path='/patients' element={<PatientList />} />
-                <Route path='/add-patient' element={<AddPatient/>} />
-                <Route path='/stock' element={<Stock />} />
-              </Routes>
-          </>
-    </div>
+    <div className="App d-flex">
+      <Navbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
+        <Routes>
+          <Route path='/' element={<AdminDashboard />} />
+          <Route path='/patients' element={<PatientList />} />
+          <Route path='/add-patient' element={<AddPatient/>} />
+          <Route path='/stock' element={<Stock />} />
+        </Routes>
+  </div>
   )
+  }
+  //employee
+   if (currentUser && !currentUser?.admin) {
+    return (
+      <div className="App d-flex">
+        <UserNavbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
+        <Routes>
+          <Route path='/' element={<PatientList />} />
+          <Route path='/stock' element={<Stock />} />
+        </Routes>
+      </div>
+    )
+  }
 };
 
 export default App;
