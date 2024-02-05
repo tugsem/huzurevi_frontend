@@ -12,7 +12,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <App className="magic-pattern" />
       </BrowserRouter>
     </Provider>
   </React.StrictMode>,

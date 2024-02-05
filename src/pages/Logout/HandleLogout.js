@@ -19,7 +19,7 @@ function HandleLogout({ setCurrentUser, setIsAuthenticated }) {
   };
 
   return (
-    <button type="button" onClick={deleteSession}>Logout</button>
+    <button type="button" className="link" onClick={deleteSession}>Logout</button>
   );
 }
 export default HandleLogout;

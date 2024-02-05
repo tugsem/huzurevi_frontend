@@ -1,11 +1,99 @@
-nav {
-  background-color: rgb(124, 138, 204);
-  color: white;
-  height: 100vh;
-  ul {
-    list-style-type: none;
+ .navbar{
+  background: var(--primary-color);
+  color: var(--text-color);
+  flex-direction: column;
+  justify-content: center;
+  height: 5vh;
+}
+
+button.link {
+  all: unset;
+}
+
+.slip-menu {
+  position: absolute;
+  background: var(--primary-color);
+  display: none;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  font-weight: 500;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  height: 95vh;
+  width: 100%;
+  top: 5vh;
+}
+
+// Show menu on trigger
+
+.show {
+  display: flex;
+}
+.slip-menu * {
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+}
+.slip-menu li {
+  display: inline-block;
+  list-style: none;
+  padding: 0.5em 1.5em;
+}
+.slip-menu a,
+.slip-menu button {
+  padding: 0.4em 0;
+  color: var(--text-color);
+  position: relative;
+  text-decoration: none;
+  display: inline-block;
+}
+.slip-menu a:before,
+.slip-menu button:before {
+  position: absolute;
+  content: '';
+  -webkit-transition: all 0.35s ease;
+  transition: all 0.35s ease;
+  opacity: 0;
+  top: 25%;
+  bottom: 25%;
+  left: 0;
+  right: 0;
+  border-top: 3px solid var(--main-heading);
+  border-bottom: 3px solid var(--main-heading);
+}
+.slip-menu a:hover,
+.slip-menu button:hover {
+  color: var(--text-color);
+}
+.slip-menu a:hover:before,
+.slip-menu button:hover:before {
+  opacity: 1;
+  top: 0;
+  bottom: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .logo {
+    position: relative;
   }
-  ul > li > * {
-    color: white;
+  .navTrigger {
+    display: none;
+  }
+  .navbar {
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    height: max-content;
+  }
+  .slip-menu {
+    position: relative;
+    top: 0;
+    margin: 0;
+    padding: 0;
+    height: inherit;
+    width: inherit;
+    display: flex;
+    font-size: 0.9em;
+    flex-direction: row;
   }
 }

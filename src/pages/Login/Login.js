@@ -44,18 +44,18 @@ const Login = ({ setCurrentUser, setIsAuthenticated }) => {
     <div className="login-form d-flex flex-column align-items-center">
       <Form onSubmit={handleSubmit}>
         <Form.Group required>
-          <Form.Label>Kullanıcı adı </Form.Label>
+          <Form.Label>Username</Form.Label>
           <Form.Control type="text" name="username" onChange={handleChange} />
         </Form.Group>
         <Form.Group required>
-          <Form.Label>Parola</Form.Label>
+          <Form.Label>Password</Form.Label>
           <Form.Control type="password" name="password" onChange={handleChange} />
         </Form.Group>
         <Button variant="info" type="submit" className="my-2">
-          Giriş Yap
+          Sign in
         </Button>
       </Form>
-      <Link to="/signup">Hesap oluştur</Link>
+      <Link to="/signup">Sign up</Link>
       { (error) && (
         <Alert variant="danger">{errorMessage}</Alert>
       )}

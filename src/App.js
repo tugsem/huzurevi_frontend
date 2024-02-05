@@ -38,7 +38,7 @@ useEffect(()=>{
 } // admin panel
   if (currentUser?.admin) {
   return (
-    <div className="App d-flex">
+    <div className="App">
       <Navbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
           <Route path='/' element={<AdminDashboard />} />
@@ -52,7 +52,7 @@ useEffect(()=>{
   //employee
    if (currentUser && !currentUser?.admin) {
     return (
-      <div className="App d-flex">
+      <div className="App">
         <UserNavbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
           <Route path='/' element={<PatientList />} />

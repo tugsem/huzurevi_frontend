@@ -2,17 +2,23 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Outlet, Link } from 'react-router-dom';
 import './navbar.scss';
+import './acordionMenu.scss';
 import HandleLogout from '../Logout/HandleLogout';
 
 const UserNavbar = ({ user, setCurrentUser, setIsAuthenticated }) => (
-  <div className="d-flex">
-    <nav className="navbar d-flex flex-column p-4">
-      <h2>
+  <div>
+    <nav className="navbar">
+      <h5 className="user">
         Welcome,
         {user}
         !
-      </h2>
-      <ul>
+      </h5>
+      <div className="navTrigger pointer">
+        <i />
+        <i />
+        <i />
+      </div>
+      <ul className="slip-menu">
         <li>
           <Link to="/">Hasta bakım formu</Link>
         </li>
