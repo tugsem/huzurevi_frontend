@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Button, Alert } from 'react-bootstrap';
+import { Button, Alert, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import { SIGNUP_URL } from '../config/api';
 
 const SignupForm = ({ setCurrentUser }) => {
@@ -19,7 +20,7 @@ const SignupForm = ({ setCurrentUser }) => {
     });
   };
 
-  function handleSubmit(e) {
+  const handleSubmit = (e) => {
     e.preventDefault();
     const userCreds = { ...formData };
 
@@ -40,32 +41,42 @@ const SignupForm = ({ setCurrentUser }) => {
         });
       }
     });
-  }
+  };
 
   return (
-    <form onSubmit={handleSubmit} className="d-flex flex-column align-items-center">
-      <label htmlFor="username">Username:</label>
-      <input
-        id="username-signup-input"
-        type="text"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-      />
-      <label htmlFor="password">Password:</label>
-      <input
-        id="password-signup-input"
-        type="password"
-        name="password"
-        value={formData.password}
-        onChange={handleChange}
-      />
+    <Form className="signup-form d-flex flex-column align-items-center justify-content-center" onSubmit={handleSubmit}>
+      <h1>Sign up</h1>
+      <Form.Group>
+        <Form.Label htmlFor="username">Username:</Form.Label>
+        <Form.Control
+          id="username-signup-input"
+          type="text"
+          name="username"
+          value={formData.username}
+          onChange={handleChange}
+        />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label htmlFor="password">Password:</Form.Label>
+        <Form.Control
+          id="password-signup-input"
+          type="password"
+          name="password"
+          value={formData.password}
+          onChange={handleChange}
+        />
+      </Form.Group>
       <Button type="submit" variant="info" className="my-2">Submit</Button>
       { (error) && (
         <Alert variant="danger">{errorMsg}</Alert>
       )}
-    </form>
+    </Form>
+
   );
 };
 
 export default SignupForm;
+
+SignupForm.propTypes = {
+  setCurrentUser: PropTypes.func.isRequired,
+};

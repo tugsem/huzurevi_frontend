@@ -1,10 +1,13 @@
 .patient-container {
-  width: 75%;
 
   .search-field{
     width: 100%;
     border-radius: 10px;
     border: none;
+    outline: none;
+  }
+  .search-field:focus {
+    background-color: var(--popup-background);
   }
   .patient-list{
     padding: 0;
@@ -15,9 +18,9 @@
   }
   .patient {
     border: 2px solid var(--secondary-color);
-    background-color: var(--primary-color);
     padding: 10px;
     border-radius: 10px;
+    border: var(--popup-background) 2px dotted;
     .patient-picture {
       width: 100px;
       height: 100px;
@@ -31,13 +34,14 @@
     }
   }
   .patient:hover{
-    background-color: var(--secondary-color);
+
+    border: var(--main-heading) 2px solid;
+    transition: ease 0.5s;
   }
 
   .popup{
     position: absolute;
     background-color: var(--popup-background);
-    color: var(--primary-color);
     border-radius: 10px;
     width: 75%;
     height: 75%;
@@ -69,6 +73,7 @@
     }
   }
   @media only screen and (min-width: 680px) {
+    padding: 0.5em 2.5em;
     .search-field{
       width: 75%;
     }

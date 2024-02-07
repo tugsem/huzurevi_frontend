@@ -1,0 +1,22 @@
+.form-container {
+  height: 100vh;
+}
+
+.login-form.slideUp {
+  position: absolute;
+  top: -100px;
+}
+.signup-form {
+  width: 100%;
+  backdrop-filter: blur(5px);
+  z-index: 0;
+}
+.btn {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2), 0 6px 20px 0 rgba(0,0,0,0.19);
+}
+.go-back {
+  z-index: 1;
+}
+@media screen and (min-width: 768px) {
+
+}

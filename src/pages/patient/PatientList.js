@@ -53,7 +53,7 @@ const PatientList = () => {
   }, [search]);
 
   return (
-    <div className="patient-container d-flex flex-column align-items-center pt-4">
+    <div className="patient-container d-flex flex-column align-items-center">
       {popupVisibility && <PopupWindow name={name} closePopup={handleClose} />}
       <form className="patient-search-box w-100 d-flex justify-content-center">
         <input className="search-field p-2 my-3" type="search" placeholder="Hasta ara" aria-label="Search" onChange={(e) => setSearch(e.target.value)} />

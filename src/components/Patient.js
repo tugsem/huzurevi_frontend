@@ -3,7 +3,7 @@ import propTypes from 'prop-types';
 
 const Patient = ({ img, name, openPopup }) => (
   <div className="patient d-flex">
-    <img alt="patient" className="patient-picture" src={img} />
+    <img alt="patient" className="patient-picture" src={img} loading="lazy" />
     <h6 className="patient-name pointer" onClick={openPopup} onKeyDown={openPopup} role="presentation">{name}</h6>
   </div>
 );
