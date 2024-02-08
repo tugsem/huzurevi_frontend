@@ -67,13 +67,12 @@ const Login = ({ setCurrentUser, setIsAuthenticated }) => {
           <span>OR</span>
           <Button onClick={handleSignup} className={(showSignup) ? 'btn btn-sm go-back' : 'btn btn-sm'}>{(showSignup) ? 'Sign in' : 'Sign up'}</Button>
         </div>
-      </Form>
-
-      { (error) && (
+        { (error) && (
         <Alert variant="danger">{errorMessage}</Alert>
-      )}
+        )}
+      </Form>
       {(showSignup) && (
-        <SignupForm />
+        <SignupForm setCurrentUser={setCurrentUser} />
       )}
     </div>
   );

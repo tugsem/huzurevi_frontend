@@ -37,7 +37,7 @@ const SignupForm = ({ setCurrentUser }) => {
       } else {
         res.json().then((errors) => {
           setError(true);
-          setErrorMsg(errors);
+          errors.map((err) => setErrorMsg(err));
         });
       }
     });
