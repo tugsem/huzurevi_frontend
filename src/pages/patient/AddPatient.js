@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import 'react-phone-number-input/style.css';
 import PhoneInput from 'react-phone-number-input';
+import { addPatient, getPatientsError } from '../../redux/patient/patientSlice';
 
 const AddPatient = () => {
-  const [error, setError] = useState(null);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const error = useSelector(getPatientsError);
+  // const [error, setError] = useState(errorMessage);
   const [value, setValue] = useState();
   const [formData, setFormData] = useState({
     first_name: '',
@@ -13,8 +19,11 @@ const AddPatient = () => {
     gender: '1',
     contact_number: '',
     email: '',
-    admission_date: '',
+    address: '',
     status: '1',
+    room_number: 0,
+    medications: '',
+    medical_history: '',
   });
 
   useEffect(() => {
@@ -32,9 +41,12 @@ const AddPatient = () => {
   };
   const handleSubmit = (e) => {
     e.preventDefault();
-    // dispatch action and add new patient to redux store if the patient is valid
-    // in case of errors set error message
-    // if the status.ok show a notification and show a button to navigate to the patient page
+    dispatch(addPatient(formData))
+      .then((response) => {
+        if (response.ok) {
+          navigate('/patients');
+        }
+      })
   };
   return (
     <Form onSubmit={handleSubmit} className="desktop-container ">
@@ -54,38 +66,46 @@ const AddPatient = () => {
         <Form.Control type="date" name="date_of_birth" onChange={handleChange} />
       </Form.Group>
       <Form.Group className="d-flex align-items-center gap-3 py-4">
-        <Form.Label>Gender</Form.Label>
+        <Form.Label>Gender:</Form.Label>
         <Form.Select aria-label="1" onChange={handleChange} name="gender">
           <option value="1">Male</option>
           <option value="2">Female</option>
           <option value="3">Non-binary</option>
         </Form.Select>
+        <Form.Label>Email:</Form.Label>
+        <Form.Control type="email" name="email" onChange={handleChange} />
       </Form.Group>
-      <Form.Group className="d-flex align-items-center gap-3">
-        <Form.Label>Contact number:</Form.Label>
+      <Form.Group>
+        <Form.Label className="text-nowrap">Adress:</Form.Label>
+        <Form.Control type="text" name="address" onChange={handleChange} />
+      </Form.Group>
+      <Form.Group className="d-flex align-items-center gap-3 py-4">
+        <Form.Label className="text-nowrap">Contact number:</Form.Label>
         <PhoneInput
           defaultCountry="TR"
           value={value}
           onChange={setValue}
         />
+        <Form.Label className="text-nowrap">Room: </Form.Label>
+        <Form.Control type="number" name="room_number" onChange={handleChange} />
       </Form.Group>
       <Form.Group className="d-flex align-items-center gap-3 py-4">
-        <Form.Label>Email:</Form.Label>
-        <Form.Control type="email" name="email" onChange={handleChange} />
-      </Form.Group>
-      <Form.Group className="d-flex align-items-center gap-3">
-        <Form.Label className="text-nowrap">Admission date:</Form.Label>
-        <Form.Control type="date" name="admission_date" onChange={handleChange} />
-      </Form.Group>
-      <Form.Group className="d-flex align-items-center gap-3 py-4">
-        <Form.Label>Status</Form.Label>
+        <Form.Label>Status:</Form.Label>
         <Form.Select aria-label="1" onChange={handleChange} name="status">
           <option value="1">Active</option>
           <option value="2">Discharged</option>
           <option value="3">On leave</option>
         </Form.Select>
       </Form.Group>
-      <Button variant="info" type="submit">Submit</Button>
+      <Form.Group className="py-4">
+        <Form.Label>Medications:</Form.Label>
+        <Form.Control type="text" name="medications" />
+      </Form.Group>
+      <Form.Group>
+        <Form.Label>Medical History:</Form.Label>
+        <Form.Control type="text" name="medical_history" />
+      </Form.Group>
+      <Button variant="info" type="submit" className="mt-4">Submit</Button>
     </Form>
   );
 };

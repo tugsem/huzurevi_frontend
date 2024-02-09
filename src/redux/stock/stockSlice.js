@@ -33,7 +33,6 @@ export const updateStockItem = createAsyncThunk('stock/updateStockItem', async (
 });
 
 export const updateStatus = createAction('stock/updateStatus');
-
 /* eslint-disable */
 export const stockSlice = createSlice({
   name: 'stock',

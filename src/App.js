@@ -38,7 +38,7 @@ useEffect(()=>{
 } // admin panel
   if (currentUser?.admin) {
   return (
-    <div className="App">
+    <div className="App magic-pattern">
       <Navbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
           <Route path='/' element={<AdminDashboard />} />

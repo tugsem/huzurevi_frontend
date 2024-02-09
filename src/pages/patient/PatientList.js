@@ -1,36 +1,28 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import Patient from '../../components/Patient';
 import PopupWindow from '../../components/PopupWindow';
 import './patients.scss';
-
-const patients = [
-  {
-    id: 1,
-    name: 'Lorem Ipsum',
-    picture: 'https://cdn-icons-png.flaticon.com/512/1430/1430453.png',
-  },
-  {
-    id: 2,
-    name: 'Knut hamsun',
-    picture: 'https://cdn-icons-png.flaticon.com/512/1430/1430453.png',
-  },
-  {
-    id: 3,
-    name: 'Faye Dunaway',
-    picture: 'https://cdn-icons-png.flaticon.com/512/1430/1430453.png',
-  },
-  {
-    id: 4,
-    name: 'Dostoyevski',
-    picture: 'https://cdn-icons-png.flaticon.com/512/1430/1430453.png',
-  },
-];
+import {
+  selectAllPatients, getPatientsStatus, fetchPatients,
+} from '../../redux/patient/patientSlice';
 
 const PatientList = () => {
-  const [searchResults, setSearchResults] = useState(patients);
+  const dispatch = useDispatch();
+  const patients = useSelector(selectAllPatients);
+  const patientsStatus = useSelector(getPatientsStatus);
+
   const [search, setSearch] = useState('');
   const [popupVisibility, setPopupVisibility] = useState(false);
   const [name, setName] = useState(null);
+
+  useEffect(() => {
+    if (patientsStatus === 'idle') {
+      dispatch(fetchPatients());
+    }
+  }, [patientsStatus, dispatch]);
+
+  const [searchResults, setSearchResults] = useState(patients);
 
   const handlePatient = (e) => {
     const textValue = e.target.innerText;
@@ -52,27 +44,35 @@ const PatientList = () => {
     }
   }, [search]);
 
-  return (
-    <div className="patient-container d-flex flex-column align-items-center">
-      {popupVisibility && <PopupWindow name={name} closePopup={handleClose} />}
-      <form className="patient-search-box w-100 d-flex justify-content-center">
-        <input className="search-field p-2 my-3" type="search" placeholder="Hasta ara" aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
-      </form>
-      <ul className="patient-list">
-        {searchResults.map((patient) => (
-          <li key={patient.id}>
-            <Patient
-              id={patient.id}
-              name={patient.name}
-              img={patient.picture}
-              openPopup={handlePatient}
-            />
-          </li>
-        ))}
-      </ul>
+  let content;
+  if (patientsStatus === 'loading') {
+    content = <h2>Loading ...</h2>;
+  } else if (patientsStatus === 'succeeded') {
+    content = (
+      <div className="patient-container d-flex flex-column align-items-center">
+        {popupVisibility && <PopupWindow name={name} closePopup={handleClose} />}
+        <form className="patient-search-box w-100 d-flex justify-content-center">
+          <input className="search-field p-2 my-3" type="search" placeholder="Hasta ara" aria-label="Search" onChange={(e) => setSearch(e.target.value)} />
+        </form>
+        <ul className="patient-list">
+          {searchResults.map((patient) => (
+            <li key={patient.id}>
+              <Patient
+                id={patient.id}
+                name={`${patient.first_name} ${patient.last_name}`}
+                img="https://cdn-icons-png.flaticon.com/512/1430/1430453.png"
+                openPopup={handlePatient}
+              />
+            </li>
+          ))}
+        </ul>
 
-    </div>
-  );
+      </div>
+    );
+  } else {
+    content = <h2>Oops..There is an error.</h2>;
+  }
+  return content; //
 };
 
 export default PatientList;
