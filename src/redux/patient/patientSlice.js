@@ -53,8 +53,12 @@ export const patientsSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(addPatient.fulfilled, (state, action) => {
-        state.status = 'idle'
         state.patients = [action.payload, ...state.patients];
+        state.status = 'idle';
+      })
+      .addCase(addPatient.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
       })
       .addCase(removePatient.fulfilled, (state, action) => {
         const patients = state.patients.filter((item) => item.id !== action.payload);
