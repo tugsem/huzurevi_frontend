@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Button, Alert } from 'react-bootstrap';
 import 'react-phone-number-input/style.css';
@@ -8,9 +8,9 @@ import { addPatient, getPatientsError } from '../../redux/patient/patientSlice';
 
 const AddPatient = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const error = useSelector(getPatientsError);
-  // const [error, setError] = useState(errorMessage);
+  const [success, setSuccess] = useState(false);
   const [value, setValue] = useState();
   const [formData, setFormData] = useState({
     first_name: '',
@@ -44,14 +44,17 @@ const AddPatient = () => {
     dispatch(addPatient(formData))
       .then((response) => {
         if (response.ok) {
-          navigate('/patients');
+          setSuccess((prevState) => !prevState);
         }
-      })
+      });
   };
   return (
     <Form onSubmit={handleSubmit} className="desktop-container ">
       { (error) && (
         <Alert variant="danger">{error}</Alert>
+      )}
+      { (success) && (
+        <Alert variant="success">The patient created.</Alert>
       )}
       <h1>Patient Record</h1>
       <Form.Group className="d-flex align-items-center gap-3 py-4">

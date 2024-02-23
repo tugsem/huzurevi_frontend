@@ -1,5 +1,6 @@
 /* eslint-disable */
-import React, { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Routes, Route } from 'react-router-dom';
 import './app.scss';
 
@@ -12,21 +13,39 @@ import Navbar from './pages/navbar/Navbar';
 import { USER_URL } from './config/api';
 import SignupForm from './pages/SignUpForm';
 import UserNavbar from './pages/navbar/UserNavbar';
+import { getPatientsStatus, fetchPatients, selectAllPatients } from './redux/patient/patientSlice';
 
 const App = () => {
+const dispatch = useDispatch();
+
 const [isAuthenticated, setIsAuthenticated] = useState(false);
 const [currentUser, setCurrentUser] = useState('');
+const [searchResults, setSearchResults] = useState([]);
+const patientsStatus = useSelector(getPatientsStatus);
+const patients = useSelector(selectAllPatients);
 
 useEffect(()=>{
   fetch(USER_URL).then((res) => {
     if(res.ok) {
       res.json().then((user) => {
         setCurrentUser(user);
-        setIsAuthenticated(true)
+        setIsAuthenticated(true);
       })
     }
   })
 }, [setCurrentUser]);
+
+useEffect(() => {
+  if (patientsStatus === 'idle') {
+    dispatch(fetchPatients())
+    .then((res) => {
+      if (res.meta.requestStatus === 'fulfilled') {
+        setSearchResults(patients);
+      }
+    })
+  }
+}, [patientsStatus]);
+
 
   if (!isAuthenticated) {
   return (
@@ -42,7 +61,7 @@ useEffect(()=>{
       <Navbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
           <Route path='/' element={<AdminDashboard />} />
-          <Route path='/patients' element={<PatientList />} />
+          <Route path='/patients' element={<PatientList  list={searchResults} userId={currentUser.id} />} />
           <Route path='/add-patient' element={<AddPatient/>} />
           <Route path='/stock' element={<Stock />} />
         </Routes>
@@ -50,12 +69,12 @@ useEffect(()=>{
   )
   }
   //employee
-   if (currentUser && !currentUser?.admin) {
+   if (!currentUser?.admin) {
     return (
       <div className="App">
         <UserNavbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
-          <Route path='/' element={<PatientList />} />
+          <Route path='/' element={<PatientList list={searchResults} userId={currentUser.id}/>} />
           <Route path='/stock' element={<Stock />} />
         </Routes>
       </div>
@@ -64,3 +83,5 @@ useEffect(()=>{
 };
 
 export default App;
+
+

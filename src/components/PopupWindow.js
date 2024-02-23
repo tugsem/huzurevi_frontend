@@ -5,7 +5,9 @@ import PatientForm from './PatientForm';
 import PatientLogs from './PatientLogs';
 import PatientNotes from './PatientNotes';
 
-const PopupWindow = ({ name, closePopup }) => (
+const PopupWindow = ({
+  name, id, closePopup, userId,
+}) => (
   <div className="popup d-flex flex-column p-3">
     <div className="d-flex align-items-center justify-content-between">
       <h1>{name}</h1>
@@ -13,17 +15,17 @@ const PopupWindow = ({ name, closePopup }) => (
     </div>
     <Tabs
       id="uncontrolled-tab-example"
-      defaultactivekey="Veri Girişi"
+      defaultactivekey="data-entry"
       className="mb-3"
     >
-      <Tab eventKey="Veri Girişi" title="Veri girişi">
-        <PatientForm patientName={name} />
+      <Tab eventKey="data-entry" title="Record data">
+        <PatientForm patientName={name} patientId={id} userId={userId} />
       </Tab>
-      <Tab eventKey="logs" title="Kayıtlar">
-        <PatientLogs patientName={name} />
+      <Tab eventKey="logs" title="Recents">
+        <PatientLogs patientName={name} patientId={id} />
       </Tab>
-      <Tab eventKey="notes" title="Notlar">
-        <PatientNotes patientName={name} />
+      <Tab eventKey="notes" title="Notes">
+        <PatientNotes patientName={name} patientId={id} />
       </Tab>
     </Tabs>
   </div>
@@ -32,7 +34,8 @@ const PopupWindow = ({ name, closePopup }) => (
 export default PopupWindow;
 
 PopupWindow.propTypes = {
-  // id: propTypes.number.isRequired,
+  userId: propTypes.number.isRequired,
+  id: propTypes.number.isRequired,
   name: propTypes.string.isRequired,
   closePopup: propTypes.func.isRequired,
 };
