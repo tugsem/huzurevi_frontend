@@ -22,7 +22,7 @@ const PatientLogs = ({ patientId, userId }) => {
   }, []);
 
   return (
-    <Table className="table-fixed" striped hover bordered>
+    <Table className="table-responsive" striped hover style={{ height: 'inherit', overflow: 'scroll' }}>
       <thead>
         <tr>
           <th>ID</th>

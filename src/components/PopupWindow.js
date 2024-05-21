@@ -8,7 +8,7 @@ import PatientNotes from './PatientNotes';
 const PopupWindow = ({
   name, id, closePopup, userId,
 }) => (
-  <div className="popup d-flex flex-column p-3">
+  <div className="popup d-flex flex-column p-3 h-100 overflow-scroll">
     <div className="d-flex align-items-center justify-content-between">
       <h1>{name}</h1>
       <span className="pointer" onClick={closePopup} onKeyDown={closePopup} role="presentation">&#10006;</span>

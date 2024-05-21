@@ -18,25 +18,22 @@ const PatientForm = ({ patientId, userId }) => {
   const [message, setMessage] = useState('');
 
   useEffect(() => {
-    const timer = () => {
-      if (alert) {
-        setTimeout(() => {
-          setAlert(false);
-        }, 2000);
-      }
-    };
-    return () => clearTimeout(timer); // Clean up the timer on component unmount or alert change
+    const timerId = setTimeout(() => {
+      setAlert(() => false);
+    }, 2000);
+    return () => clearTimeout(timerId); // Clean up the timer on component unmount or alert change
   }, [alert]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post(MEDICAL_RECORD_URL, { ...formData });
-      console.log(response.created);
-      if (response.created) {
+      if (response.status === 201) {
+        setAlert((prevState) => !prevState);
         setMessage('Saved successfully');
       }
     } catch (error) {
+      setAlert((prevState) => !prevState);
       setMessage(error.message);
     }
   };
