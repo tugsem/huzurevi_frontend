@@ -22,7 +22,7 @@ const PopupWindow = ({
         <PatientForm patientName={name} patientId={id} userId={userId} />
       </Tab>
       <Tab eventKey="logs" title="Recents">
-        <PatientLogs patientName={name} patientId={id} />
+        <PatientLogs patientId={id} userId={userId} />
       </Tab>
       <Tab eventKey="notes" title="Notes">
         <PatientNotes patientName={name} patientId={id} />

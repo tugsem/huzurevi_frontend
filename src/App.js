@@ -33,7 +33,7 @@ useEffect(()=>{
       })
     }
   })
-}, [setCurrentUser]);
+}, []);
 
 useEffect(() => {
   if (patientsStatus === 'idle') {

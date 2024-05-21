@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import propTypes from 'prop-types';
-import { Form, Button } from 'react-bootstrap';
+import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { PATIENT_URL } from '../config/api';
 
@@ -14,10 +14,31 @@ const PatientForm = ({ patientId, userId }) => {
     nurse_id: userId,
     administration_time: '',
   });
+  const [alert, setAlert] = useState(false);
+  const [message, setMessage] = useState('');
+
+  useEffect(() => {
+    const timer = () => {
+      if (alert) {
+        setTimeout(() => {
+          setAlert(false);
+        }, 2000);
+      }
+    };
+    return () => clearTimeout(timer); // Clean up the timer on component unmount or alert change
+  }, [alert]);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await axios.post(MEDICAL_RECORD_URL, { ...formData });
-    console.log(response.data);
+    try {
+      const response = await axios.post(MEDICAL_RECORD_URL, { ...formData });
+      console.log(response.created);
+      if (response.created) {
+        setMessage('Saved successfully');
+      }
+    } catch (error) {
+      setMessage(error.message);
+    }
   };
   const handleChange = (e) => {
     setFormData((prevFormData) => ({
@@ -27,21 +48,20 @@ const PatientForm = ({ patientId, userId }) => {
   };
   return (
     <Form className="d-flex flex-column stock-form" onSubmit={handleSubmit}>
+      {alert && (
+        <Alert variant="info">{message}</Alert>
+      )}
       <Form.Group required>
         <Form.Label>Medicine</Form.Label>
-        <Form.Control type="text" name="medication_name" placeholder="the name of the medicine" onChange={handleChange} />
+        <Form.Control type="text" name="medication_name" placeholder="the name of the medicine" onChange={handleChange} required />
       </Form.Group>
       <Form.Group required>
-        <Form.Label>Dosage</Form.Label>
-        <Form.Control type="text" name="dosage" placeholder="the dosage" onChange={handleChange} />
-      </Form.Group>
-      <Form.Group required>
-        <Form.Label>Note</Form.Label>
-        <Form.Control type="text" name="note" placeholder="anything to know" onChange={handleChange} />
+        <Form.Label>Dosage(mg)</Form.Label>
+        <Form.Control type="number" name="dosage" placeholder="the dosage" onChange={handleChange} required min="0" />
       </Form.Group>
       <Form.Group required>
         <Form.Label>Administration time:</Form.Label>
-        <Form.Control type="time" name="administration_time" placeholder="time" onChange={handleChange} />
+        <Form.Control type="time" name="administration_time" placeholder="time" onChange={handleChange} required />
       </Form.Group>
       <Button variant="info" type="submit" className="mt-3">
         Save
