@@ -4,7 +4,9 @@ import { Form, Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import { PATIENT_URL } from '../config/api';
 
-const PatientForm = ({ patientId, userId }) => {
+const PatientForm = ({
+  patientId, userId, logs, setMedicalRecords,
+}) => {
   const MEDICAL_RECORD_URL = `${PATIENT_URL}/${patientId}/medication_records`;
   const [formData, setFormData] = useState({
     medication_name: '',
@@ -31,6 +33,8 @@ const PatientForm = ({ patientId, userId }) => {
       if (response.status === 201) {
         setAlert((prevState) => !prevState);
         setMessage('Saved successfully');
+        console.log(response.data);
+        setMedicalRecords([...logs, response.data]);
       }
     } catch (error) {
       setAlert((prevState) => !prevState);
@@ -72,4 +76,6 @@ export default PatientForm;
 PatientForm.propTypes = {
   userId: propTypes.number.isRequired,
   patientId: propTypes.number.isRequired,
+  logs: propTypes.arrayOf(propTypes.objectOf(propTypes.any)).isRequired,
+  setMedicalRecords: propTypes.func.isRequired,
 };
