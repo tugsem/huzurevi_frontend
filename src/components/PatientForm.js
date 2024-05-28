@@ -33,7 +33,6 @@ const PatientForm = ({
       if (response.status === 201) {
         setAlert((prevState) => !prevState);
         setMessage('Saved successfully');
-        console.log(response.data);
         setMedicalRecords([...logs, response.data]);
       }
     } catch (error) {
