@@ -50,7 +50,7 @@ const PopupWindow = ({
           <PatientLogs userId={userId} logs={medicalRecords} />
         </Tab>
         <Tab eventKey="notes" title="Notes">
-          <PatientNotes patientName={name} patientId={id} />
+          <PatientNotes patientName={name} patientId={id} userId={userId} />
         </Tab>
       </Tabs>
     </div>

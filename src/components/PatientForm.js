@@ -23,7 +23,7 @@ const PatientForm = ({
     const timerId = setTimeout(() => {
       setAlert(() => false);
     }, 2000);
-    return () => clearTimeout(timerId); // Clean up the timer on component unmount or alert change
+    return () => clearTimeout(timerId);
   }, [alert]);
 
   const handleSubmit = async (e) => {
