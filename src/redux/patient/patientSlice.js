@@ -79,7 +79,7 @@ export const patientsSlice = createSlice({
   },
 });
 
-export const selectAllPatients = (state) => state.patients.patients;
+export const selectAllPatients = (state) => state.patients.patients || [];
 export const getPatientsStatus = (state) => state.patients.status;
 export const getPatientsError = (state) => state.patients.error;
 

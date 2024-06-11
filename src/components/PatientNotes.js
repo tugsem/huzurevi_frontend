@@ -1,34 +1,39 @@
 import React, { useEffect, useState } from 'react';
-import { Button } from 'react-bootstrap';
+import { Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import propTypes from 'prop-types';
 import { PATIENT_URL } from '../config/api';
 
-const PatientNotes = ({ patientId, patientName, userId }) => {
+const PatientNotes = ({ patientId, userId }) => {
   const [notes, setNotes] = useState([]);
   const [formData, setFormData] = useState({
     note: '',
-    patient_id: '',
-    nurse_id: '',
+    user_id: '',
   });
+  const [alert, setAlert] = useState(null);
 
   const sendFormData = async () => {
     try {
-      console.log(formData);
       const response = await axios.post(`${PATIENT_URL}/${patientId}/notes`, formData);
       return response.data;
     } catch (e) {
+      setAlert(() => e.response.data.message.note[0]);
+      setTimeout(() => {
+        setAlert(() => null);
+      }, 3000);
       return e;
     }
   };
 
-  const handleNote = (e) => {
-    e.preventDefault();
+  const handleChange = (e) => {
     setFormData(() => ({
-      note: e.target.firstChild.value,
-      patient_id: patientId,
-      nurse_id: userId,
+      note: e.target.value,
+      user_id: userId,
     }));
+  };
+
+  const submitFormData = (e) => {
+    e.preventDefault();
     sendFormData();
     e.target.firstChild.value = '';
   };
@@ -36,26 +41,33 @@ const PatientNotes = ({ patientId, patientName, userId }) => {
   useEffect(() => {
     const loadNotes = async () => {
       const response = await axios.get(`${PATIENT_URL}/${patientId}/notes`);
-      setNotes(() => response.data);
+      const data = await response.data;
+      setNotes(() => data);
     };
     loadNotes();
   }, []);
 
   return (
     <div className="d-flex flex-column justify-content-between note-container">
+      { alert && (
+        <Alert variant="danger">{alert}</Alert>
+      )}
       <ul className="patient-notes d-flex flex-column">
-        {notes.map((note) => (
-          <li key={note.index} className="d-flex flex-column">
+        {notes?.map((note) => (
+          <li key={note.id} className={`d-flex flex-column ${note.user_id === userId ? 'align-self-end' : ''}`}>
             <div className="d-flex justify-content-between align-items-center gap-5">
-              <span className="smallest-font">{patientName}</span>
+              <span className="smallest-font">
+                by #
+                {note.user_id}
+              </span>
               <span className="smallest-font align-self-end">{note.date}</span>
             </div>
             <span>{note.note}</span>
           </li>
         ))}
       </ul>
-      <form className="d-flex justify-content-between note-form w-100" onSubmit={handleNote}>
-        <input className="w-100" type="text" placeholder="Notu giriniz" />
+      <form className="d-flex justify-content-between note-form w-100" action="/patients" onSubmit={submitFormData}>
+        <input type="text" placeholder="Notu giriniz" name="note" onChange={handleChange} />
         <Button variant="info" type="submit">Kaydet</Button>
       </form>
     </div>
@@ -65,6 +77,5 @@ export default PatientNotes;
 
 PatientNotes.propTypes = {
   patientId: propTypes.number.isRequired,
-  patientName: propTypes.string.isRequired,
   userId: propTypes.number.isRequired,
 };

@@ -51,7 +51,7 @@
     left: 0;
     margin: auto;
     .note-container {
-      height: 500px;
+      height: 80vh;
     }
     .patient-notes {
       list-style-type: none;
@@ -62,14 +62,17 @@
     }
     .patient-notes  >* {
       width: max-content;
-      color: var(--main-heading);
       padding: 0 10px;
-      border-top-right-radius: 10px;
-      border-bottom-right-radius: 10px;
       background-color: var(--primary-color);
     }
     .note-form{
       align-self: flex-end;
+    }
+    .note-form > input {
+      border: none;
+      border-radius: 10px;
+      padding-left: 10px;
+      width: 100%;
     }
   }
 }
