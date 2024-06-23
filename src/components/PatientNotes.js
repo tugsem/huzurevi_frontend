@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import propTypes from 'prop-types';
@@ -7,6 +7,8 @@ import { PATIENT_URL } from '../config/api';
 const PatientNotes = ({
   patientId, userId, notes, setNewNote,
 }) => {
+  const messagesEndRef = useRef(null);
+
   const [formData, setFormData] = useState({
     note: '',
     user_id: '',
@@ -39,6 +41,13 @@ const PatientNotes = ({
     sendFormData();
     e.target.firstChild.value = '';
   };
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behaviour: 'smooth' });
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [notes]);
 
   return (
     <div className="d-flex flex-column justify-content-between note-container">
@@ -58,6 +67,7 @@ const PatientNotes = ({
             <span>{note.note}</span>
           </li>
         ))}
+        <div ref={messagesEndRef} />
       </ul>
       <form className="d-flex justify-content-between note-form w-100" action="/patients" onSubmit={submitFormData}>
         <input type="text" placeholder="Notu giriniz" name="note" onChange={handleChange} />
