@@ -75,7 +75,7 @@ export const patientsSlice = createSlice({
       })
       .addCase(updateStatus, (state) => {
         state.status = 'idle';
-      });
+      })
   },
 });
 

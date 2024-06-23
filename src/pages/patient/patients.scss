@@ -63,6 +63,7 @@
     .patient-notes  >* {
       width: max-content;
       padding: 0 10px;
+      border-radius: 10px;
       background-color: var(--primary-color);
     }
     .note-form{

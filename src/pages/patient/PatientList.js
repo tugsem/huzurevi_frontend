@@ -24,7 +24,8 @@ const PatientList = ({ userId }) => {
     const textValue = e.target.innerText;
     setName(textValue);
     setPopupVisibility((prevState) => !prevState);
-    setId(e.target.parentNode.id);
+    const patientId = e.target.parentNode.id;
+    setId(patientId);
   };
 
   const handleClose = () => {
@@ -54,7 +55,14 @@ const PatientList = ({ userId }) => {
       setContent(() => (
         <div className="patient-container d-flex flex-column align-items-center">
           {popupVisibility
-            && <PopupWindow name={name} id={Number(id)} userId={userId} closePopup={handleClose} />}
+          && (
+          <PopupWindow
+            name={name}
+            id={Number(id)}
+            userId={userId}
+            closePopup={handleClose}
+          />
+          )}
           <form className="patient-search-box w-100 d-flex justify-content-center">
             <input className="search-field p-2 my-3" type="search" placeholder="Hasta ara" aria-label="Search" onChange={handleSearch} />
           </form>

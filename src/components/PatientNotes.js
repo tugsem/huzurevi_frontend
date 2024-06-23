@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Button, Alert } from 'react-bootstrap';
 import axios from 'axios';
 import propTypes from 'prop-types';
 import { PATIENT_URL } from '../config/api';
 
-const PatientNotes = ({ patientId, userId }) => {
-  const [notes, setNotes] = useState([]);
+const PatientNotes = ({
+  patientId, userId, notes, setNewNote,
+}) => {
   const [formData, setFormData] = useState({
     note: '',
     user_id: '',
@@ -15,7 +16,7 @@ const PatientNotes = ({ patientId, userId }) => {
   const sendFormData = async () => {
     try {
       const response = await axios.post(`${PATIENT_URL}/${patientId}/notes`, formData);
-      return response.data;
+      setNewNote([...notes, response.data]);
     } catch (e) {
       setAlert(() => e.response.data.message.note[0]);
       setTimeout(() => {
@@ -23,6 +24,7 @@ const PatientNotes = ({ patientId, userId }) => {
       }, 3000);
       return e;
     }
+    return undefined;
   };
 
   const handleChange = (e) => {
@@ -37,15 +39,6 @@ const PatientNotes = ({ patientId, userId }) => {
     sendFormData();
     e.target.firstChild.value = '';
   };
-
-  useEffect(() => {
-    const loadNotes = async () => {
-      const response = await axios.get(`${PATIENT_URL}/${patientId}/notes`);
-      const data = await response.data;
-      setNotes(() => data);
-    };
-    loadNotes();
-  }, []);
 
   return (
     <div className="d-flex flex-column justify-content-between note-container">
@@ -78,4 +71,6 @@ export default PatientNotes;
 PatientNotes.propTypes = {
   patientId: propTypes.number.isRequired,
   userId: propTypes.number.isRequired,
+  notes: propTypes.arrayOf(propTypes.objectOf(propTypes.any)).isRequired,
+  setNewNote: propTypes.func.isRequired,
 };

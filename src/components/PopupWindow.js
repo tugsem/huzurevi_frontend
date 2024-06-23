@@ -12,9 +12,15 @@ const PopupWindow = ({
 }) => {
   const MEDICAL_RECORD_URL = `${PATIENT_URL}/${id}/medication_records`;
   const [medicalRecords, setMedicalRecords] = useState([]);
+  const [newNote, setNewNote] = useState([]);
 
   const getPatientLogs = async () => {
     const response = await axios.get(MEDICAL_RECORD_URL);
+    return response.data;
+  };
+
+  const getPatientNotes = async () => {
+    const response = await axios.get(`${PATIENT_URL}/${id}/notes`);
     return response.data;
   };
 
@@ -26,6 +32,14 @@ const PopupWindow = ({
     loadMedicationRecords();
   }, [setMedicalRecords]);
 
+  useEffect(() => {
+    // when a new note drops in, update the state and render the component
+    const loadPatientNotes = async () => {
+      const notes = await getPatientNotes();
+      setNewNote(() => notes);
+    };
+    loadPatientNotes();
+  }, [setNewNote]);
   return (
     <div className="popup d-flex flex-column p-3 h-100 overflow-scroll">
       <div className="d-flex align-items-center justify-content-between">
@@ -50,7 +64,13 @@ const PopupWindow = ({
           <PatientLogs userId={userId} logs={medicalRecords} />
         </Tab>
         <Tab eventKey="notes" title="Notes">
-          <PatientNotes patientName={name} patientId={id} userId={userId} />
+          <PatientNotes
+            patientName={name}
+            patientId={id}
+            userId={userId}
+            notes={newNote}
+            setNewNote={setNewNote}
+          />
         </Tab>
       </Tabs>
     </div>
