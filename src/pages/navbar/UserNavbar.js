@@ -20,10 +20,10 @@ const UserNavbar = ({ user, setCurrentUser, setIsAuthenticated }) => (
       </div>
       <ul className="slip-menu">
         <li>
-          <Link to="/">Hasta bakım formu</Link>
+          <Link to="/">Patients</Link>
         </li>
         <li>
-          <Link to="/stock">Stok Listesi</Link>
+          <Link to="/stock">Stock</Link>
         </li>
         <li>
           <HandleLogout setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated} />

@@ -32,19 +32,19 @@ const Stock = () => {
         onSelect={(k) => setKey(k)}
         className="my-2"
       >
-        <Tab eventKey="stocklist" title="Güncel Stok">
+        <Tab eventKey="stocklist" title="Current stock">
           <StockList />
         </Tab>
-        <Tab eventKey="addItem" title="Ürün Ekle">
+        <Tab eventKey="addItem" title="Add">
           <NewStock change={handleTabChange} />
         </Tab>
-        <Tab eventKey="updateItem" title="Ürün Düzenle">
+        <Tab eventKey="updateItem" title="Update">
           <UpdateItem change={handleTabChange} />
         </Tab>
-        <Tab eventKey="UpdateStock" title="Veri Girişi">
+        <Tab eventKey="UpdateStock" title="Operation">
           <UpdateStock change={handleTabChange} />
         </Tab>
-        <Tab eventKey="Logs" title="Kayıtlar">
+        <Tab eventKey="Logs" title="Records">
           <Logs />
         </Tab>
       </Tabs>

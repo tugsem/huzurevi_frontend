@@ -17,7 +17,7 @@ const Logs = () => {
   const dispatch = useDispatch();
 
   let stock = useSelector(selectAllStock);
-  let allOption = {name: "Tümünü gör", value:"all"}
+  let allOption = {name: "See all", value:"all"}
   let stockList = [allOption, ...stock];
 
   const stockLogs = useSelector(getStockLogs);
@@ -74,7 +74,7 @@ const Logs = () => {
 
   const handleChange = (name) => {
     let filteredStock;
-    if(name === "Tümünü gör"){
+    if(name === "See all"){
       setFiltered(null);
     } else {
       filteredStock = stockLogs.filter(log => log.stock_name === name);
@@ -96,7 +96,7 @@ const Logs = () => {
       {showAlert && (
         <div>
           <Alert className="d-flex justify-content-between align-items-center w-100 mt-1 p-1" variant="danger">
-            <span>Bu item silinecek</span>
+            <span>This item will be destroyed</span>
             <div className="d-flex gap-2">
             <FaCheck
               className="cursor-pointer"
@@ -120,10 +120,10 @@ const Logs = () => {
         <Table className="table-fixed" striped bordered hover>
           <thead>
             <tr>
-              <th>Ürün</th>
-              <th>Miktar</th>
-              <th>Teslim</th>
-              <th>Tarih</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Recipient</th>
+              <th>Date</th>
             </tr>
           </thead>
           <tbody>

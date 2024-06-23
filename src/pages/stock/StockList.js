@@ -70,9 +70,9 @@ const StockList = () => {
         <Table className="table-fixed" striped hover bordered>
           <thead>
             <tr>
-              <th>Ürün</th>
-              <th>Miktar</th>
-              <th>Birim</th>
+              <th>Product</th>
+              <th>Quantity</th>
+              <th>Unit</th>
             </tr>
           </thead>
           <tbody>

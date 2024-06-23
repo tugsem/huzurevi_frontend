@@ -64,7 +64,7 @@ const PatientList = ({ userId }) => {
           />
           )}
           <form className="patient-search-box w-100 d-flex justify-content-center">
-            <input className="search-field p-2 my-3" type="search" placeholder="Hasta ara" aria-label="Search" onChange={handleSearch} />
+            <input className="search-field p-2 my-3" type="search" placeholder="Search" aria-label="Search" onChange={handleSearch} />
           </form>
           <ul className="patient-list">
             {searchResults?.map((patient) => (

@@ -6,7 +6,7 @@ const StockDropdown = ({options, handleClick}) => {
   return (
     <Select
       options={options}
-      placeholder="Ürün ara"
+      placeholder="Search"
       getOptionLabel={option => option.name}
       getOptionValue={option => option.value}
       onChange={(option)=>handleClick({value: option.value, name: option.name })}

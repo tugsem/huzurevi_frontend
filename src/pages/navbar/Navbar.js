@@ -37,13 +37,16 @@ const Navbar = ({ setCurrentUser, setIsAuthenticated }) => {
         </div>
         <ul className={hidden ? 'slip-menu' : 'slip-menu show'}>
           <li>
-            <Link to="/patients" className="link" onClick={handleLinkClick}>Hasta bakım formu</Link>
+            <Link to="/" className="link" onClick={handleLinkClick}>Dashboard</Link>
           </li>
           <li>
-            <Link to="/add-patient" className="link" onClick={handleLinkClick}>Hasta Kayıt</Link>
+            <Link to="/patients" className="link" onClick={handleLinkClick}>Patients</Link>
           </li>
           <li>
-            <Link to="/stock" className="link" onClick={handleLinkClick}>Stok Listesi</Link>
+            <Link to="/add-patient" className="link" onClick={handleLinkClick}>New Patient</Link>
+          </li>
+          <li>
+            <Link to="/stock" className="link" onClick={handleLinkClick}>Stock</Link>
           </li>
           <li>
             <HandleLogout setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated} />

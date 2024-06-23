@@ -70,8 +70,8 @@ const PatientNotes = ({
         <div ref={messagesEndRef} />
       </ul>
       <form className="d-flex justify-content-between note-form w-100" action="/patients" onSubmit={submitFormData}>
-        <input type="text" placeholder="Notu giriniz" name="note" onChange={handleChange} />
-        <Button variant="info" type="submit">Kaydet</Button>
+        <input type="text" placeholder="Enter your note" name="note" onChange={handleChange} />
+        <Button variant="info" type="submit">Save</Button>
       </form>
     </div>
   );

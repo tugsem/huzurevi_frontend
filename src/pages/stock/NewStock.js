@@ -43,25 +43,24 @@ const NewStock = ({ change }) => {
     <section className="form-container">
       <Form ref={formRef} className="d-flex flex-column stock-form" onSubmit={(e) => handleSubmit(e)}>
         <Form.Group required>
-          <Form.Label>Ürün </Form.Label>
+          <Form.Label>Product </Form.Label>
           <Form.Control type="text" placeholder="Ürün ismi" defaultValue="" onBlur={(e) => setName(e.target.value)} />
         </Form.Group>
         <Form.Group required>
-          <Form.Label>Miktar</Form.Label>
+          <Form.Label>Quantity</Form.Label>
           <Form.Control type="text" placeholder="Miktar" defaultValue="" onBlur={(e) => setQuantity(Number(e.target.value))} />
         </Form.Group>
         <Form.Group required>
-          <Form.Label>Birim</Form.Label>
+          <Form.Label>Unit</Form.Label>
           <Form.Select className="dd-unit" defaultValue="" onChange={(e) => setUnit(e.target.value)}>
             <option value={null}>Birim Seçiniz</option>
-            <option>Adet</option>
+            <option>Pcs</option>
             <option>Kg</option>
-            <option>Lt</option>
           </Form.Select>
         </Form.Group>
-        {error && <Alert variant="danger" className="mt-2">Lütfen gerekli yerleri doldurunuz.</Alert>}
+        {error && <Alert variant="danger" className="mt-2">Please fill the required items.</Alert>}
         <Button variant="info" type="submit" className="mt-3">
-          Kaydet
+          Save
         </Button>
       </Form>
     </section>

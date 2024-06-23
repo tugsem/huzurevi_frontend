@@ -64,23 +64,22 @@ const UpdateItem = ({ change }) => {
           handleClick={({ value }) => setId(value)}
         />
         <Form.Group required>
-          <Form.Label>İsim</Form.Label>
-          <Form.Control type="text" placeholder="Yeni isim" defaultValue="" onBlur={(e) => setName(e.target.value)} />
+          <Form.Label>Label</Form.Label>
+          <Form.Control type="text" placeholder="New label" defaultValue="" onBlur={(e) => setName(e.target.value)} />
         </Form.Group>
         <Form.Group required>
-          <Form.Label>Miktar</Form.Label>
-          <Form.Control type="text" placeholder="Miktar" defaultValue="" onBlur={(e) => setQuantity(Number(e.target.value))} />
+          <Form.Label>Quantity</Form.Label>
+          <Form.Control type="text" placeholder="Quantity" defaultValue="" onBlur={(e) => setQuantity(Number(e.target.value))} />
         </Form.Group>
         <Form.Group required>
-          <Form.Label>Birim</Form.Label>
+          <Form.Label>Unit</Form.Label>
           <Form.Select id="dd_stock_unit" defaultValue="" onChange={(e) => setUnit(e.target.value)}>
-            <option value={null}>Seçiniz</option>
-            <option>Adet</option>
+            <option value={null}>Select</option>
+            <option>Pcs</option>
             <option>Kg</option>
-            <option>Lt</option>
           </Form.Select>
         </Form.Group>
-        {error && <Alert variant="danger" className="mt-2">Lütfen gerekli yerleri doldurunuz.</Alert>}
+        {error && <Alert variant="danger" className="mt-2">Please fill the required items.</Alert>}
         <Button variant="info" type="submit" className="mt-3">
           Kaydet
         </Button>
