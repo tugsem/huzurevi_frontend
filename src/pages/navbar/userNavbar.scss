@@ -6,7 +6,15 @@
   color: var(--text-color);
   height: max-content;
 }
-
+.logo {
+  padding-left: 5rem;
+}
+.logoImage {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  transform: scale(1.5);
+}
 button.link {
   all: unset;
 }

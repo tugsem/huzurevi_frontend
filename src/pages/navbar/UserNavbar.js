@@ -30,9 +30,14 @@ const UserNavbar = ({ user, setCurrentUser, setIsAuthenticated }) => {
   return (
     <div>
       <nav className="navbar d-flex">
-        <h6 className="user px-4">
-          {capitalizeWords(user) || ''}
-        </h6>
+        <div className="d-flex align-items-center">
+          <Link to="/" className="logo">
+            <img alt="logo" src="./logo.png" className="logoImage" />
+          </Link>
+          <h6 className="user px-4">
+            {capitalizeWords(user) || ''}
+          </h6>
+        </div>
         <div className={hidden ? 'navTrigger pointer' : 'navTrigger pointer active'} onClick={handleMenu} role="button" tabIndex={0} onKeyDown={handleMenu}>
           <i />
           <i />

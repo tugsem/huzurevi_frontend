@@ -29,7 +29,9 @@ const AdminNavbar = ({ setCurrentUser, setIsAuthenticated }) => {
   return (
     <div>
       <nav className="navbar d-flex">
-        <Link to="/" className="logo" />
+        <Link to="/" className="logo">
+          <img alt="logo" src="./logo.png" className="logoImage" />
+        </Link>
         <div className={hidden ? 'navTrigger pointer' : 'navTrigger pointer active'} onClick={handleMenu} role="button" tabIndex={0} onKeyDown={handleMenu}>
           <i />
           <i />

@@ -17,7 +17,14 @@
   ::-webkit-scrollbar {
     display: none;
   }
-
+  .bigLogoContainer {
+    width: 100%;
+    min-height: 100vh;
+    background-image: url('./../public/logo.png');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
   .main-heading {
     color: var(--main-heading)
   }
