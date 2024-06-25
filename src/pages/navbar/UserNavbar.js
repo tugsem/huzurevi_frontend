@@ -1,40 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Outlet, Link } from 'react-router-dom';
-import './navbar.scss';
+import './userNavbar.scss';
 import './acordionMenu.scss';
 import HandleLogout from '../Logout/HandleLogout';
+import capitalizeWords from '../../modules/capitalizeWords';
 
-const UserNavbar = ({ user, setCurrentUser, setIsAuthenticated }) => (
-  <div>
-    <nav className="navbar">
-      <h5 className="user">
-        Welcome,
-        {user}
-        !
-      </h5>
-      <div className="navTrigger pointer">
-        <i />
-        <i />
-        <i />
-      </div>
-      <ul className="slip-menu">
-        <li>
-          <Link to="/">Patients</Link>
-        </li>
-        <li>
-          <Link to="/stock">Stock</Link>
-        </li>
-        <li>
-          <HandleLogout setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated} />
-        </li>
-      </ul>
-    </nav>
+const UserNavbar = ({ user, setCurrentUser, setIsAuthenticated }) => {
+  const [hidden, setHidden] = useState(true);
 
-    <Outlet />
-  </div>
-);
+  const body = document.querySelector('body');
 
+  useEffect(() => {
+    if (hidden) {
+      body.style.overflow = 'auto';
+    } else {
+      body.style.overflow = 'hidden';
+    }
+  }, [setHidden]);
+
+  const handleMenu = () => {
+    setHidden((prevState) => !prevState);
+  };
+
+  const handleLinkClick = () => {
+    setHidden((prevState) => !prevState);
+  };
+
+  return (
+    <div>
+      <nav className="navbar d-flex">
+        <h6 className="user px-4">
+          {capitalizeWords(user) || ''}
+        </h6>
+        <div className={hidden ? 'navTrigger pointer' : 'navTrigger pointer active'} onClick={handleMenu} role="button" tabIndex={0} onKeyDown={handleMenu}>
+          <i />
+          <i />
+          <i />
+        </div>
+        <ul className={hidden ? 'slip-menu' : 'slip-menu show'}>
+          <li>
+            <Link to="/" onClick={handleLinkClick}>Patients</Link>
+          </li>
+          <li>
+            <HandleLogout setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated} />
+          </li>
+        </ul>
+      </nav>
+
+      <Outlet />
+    </div>
+  );
+};
 export default UserNavbar;
 
 UserNavbar.propTypes = {

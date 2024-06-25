@@ -4,6 +4,7 @@ import { LOGOUT_URL } from '../../config/api';
 
 function HandleLogout({ setCurrentUser, setIsAuthenticated }) {
   const navigate = useNavigate();
+  localStorage.setItem('isAuthenticated', false);
   const deleteSession = () => {
     fetch(LOGOUT_URL, {
       method: 'DELETE',

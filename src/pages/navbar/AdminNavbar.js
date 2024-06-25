@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { Outlet, Link } from 'react-router-dom';
-import './navbar.scss';
+import './adminNavbar.scss';
 import './acordionMenu.scss';
 import HandleLogout from '../Logout/HandleLogout';
 
-const Navbar = ({ setCurrentUser, setIsAuthenticated }) => {
+const AdminNavbar = ({ setCurrentUser, setIsAuthenticated }) => {
   const [hidden, setHidden] = useState(true);
 
   const body = document.querySelector('body');
@@ -59,10 +59,9 @@ const Navbar = ({ setCurrentUser, setIsAuthenticated }) => {
   );
 };
 
-export default Navbar;
+export default AdminNavbar;
 
-Navbar.propTypes = {
-  // user: PropTypes.string.isRequired,
+AdminNavbar.propTypes = {
   setCurrentUser: PropTypes.func.isRequired,
   setIsAuthenticated: PropTypes.func.isRequired,
 };

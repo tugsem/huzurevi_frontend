@@ -1,0 +1,18 @@
+.dashboardContainer {
+    flex-direction: column;
+    align-items: center;
+
+}     
+.chart {
+    max-width: 650px;
+}
+.statContainer {
+    background-color: #fff;
+    flex-direction: column;
+    justify-content: center;
+    gap: 10px;
+    align-items: center;
+    padding: 30px;
+    height: 100px;
+    border-radius: 30px;
+   }

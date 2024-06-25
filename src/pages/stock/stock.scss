@@ -1,17 +1,17 @@
 *.stock {
+  margin: 0 10%;
   .btn.btn-info {
     color: #fff;
     font-size: 18px;
   }
 
   button.nav-link {
-    color: #1b3742;
+    color: var(--text-color);
     font-size: 18px;
   }
 
   button.nav-link.active {
     background-color: #fff;
-    color: #666666a8;
   }
 
   .pagination li {
@@ -20,7 +20,7 @@
       align-items: center;
       justify-content: center;
       text-decoration: none;
-      color: #1b3742;
+      color: var(--text-color);
       padding: 18px;
       width: 20px;
       height: 20px;

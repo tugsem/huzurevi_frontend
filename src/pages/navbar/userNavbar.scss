@@ -1,9 +1,10 @@
- .navbar{
+ .navbar {
   background: var(--primary-color);
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
   color: var(--text-color);
-  flex-direction: column;
-  justify-content: center;
-  height: 5vh;
+  height: max-content;
 }
 
 button.link {
@@ -73,17 +74,11 @@ button.link {
 }
 
 @media screen and (min-width: 768px) {
-  .logo {
-    position: relative;
-  }
+  // .logo {
+  //   position: relative;
+  // }
   .navTrigger {
     display: none;
-  }
-  .navbar {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center;
-    height: max-content;
   }
   .slip-menu {
     position: relative;

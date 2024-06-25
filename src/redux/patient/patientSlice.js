@@ -4,6 +4,7 @@ import { PATIENT_URL } from '../../config/api';
 
 const initialState = {
   patients: [],
+  patientCount: 0,
   status: 'idle', // 'idle' | 'loading' | 'succeed' | 'failed'
   error: null,
 };
@@ -47,6 +48,7 @@ export const patientsSlice = createSlice({
       .addCase(fetchPatients.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.patients = action.payload;
+        state.patientCount = action.payload.length;
       })
       .addCase(fetchPatients.rejected, (state, action) => {
         state.status = 'failed';
@@ -55,6 +57,7 @@ export const patientsSlice = createSlice({
       .addCase(addPatient.fulfilled, (state, action) => {
         state.patients = [action.payload, ...state.patients];
         state.status = 'idle';
+        state.patientCount = state.patientCount++;
       })
       .addCase(addPatient.rejected, (state, action) => {
         state.status = 'failed';
@@ -63,6 +66,7 @@ export const patientsSlice = createSlice({
       .addCase(removePatient.fulfilled, (state, action) => {
         const patients = state.patients.filter((item) => item.id !== action.payload);
         state.patients = patients;
+        state.patientCount = state.patientCount - 1;
       })
       .addCase(updatePatient.pending, (state) => {
         state.status = 'loading';
@@ -80,6 +84,7 @@ export const patientsSlice = createSlice({
 });
 
 export const selectAllPatients = (state) => state.patients.patients || [];
+export const selectPatientCount = (state) => state.patients.patientCount;
 export const getPatientsStatus = (state) => state.patients.status;
 export const getPatientsError = (state) => state.patients.error;
 

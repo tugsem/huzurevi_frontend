@@ -9,7 +9,7 @@ import AddPatient from './pages/patient/AddPatient';
 import Login from './pages/Login/Login';
 import PatientList from './pages/patient/PatientList';
 import AdminDashboard from './pages/Admin/AdminDashboard';
-import Navbar from './pages/navbar/Navbar';
+import AdminNavbar from './pages/navbar/AdminNavbar';
 import { USER_URL } from './config/api';
 import SignupForm from './pages/SignUpForm';
 import UserNavbar from './pages/navbar/UserNavbar';
@@ -23,13 +23,15 @@ const [currentUser, setCurrentUser] = useState('');
 const [searchResults, setSearchResults] = useState([]);
 const patientsStatus = useSelector(getPatientsStatus);
 const patients = useSelector(selectAllPatients);
+const [loading, setLoading] = useState(true);
 
 useEffect(()=>{
-  fetch(USER_URL).then((res) => {
+  fetch(USER_URL).then((res) => {7
     if(res.ok) {
       res.json().then((user) => {
         setCurrentUser(user);
-        setIsAuthenticated(true);
+        setIsAuthenticated(() => true);
+        setLoading(false);
       })
     }
   })
@@ -46,8 +48,12 @@ useEffect(() => {
   }
 }, [patientsStatus]);
 
-
-  if (!isAuthenticated) {
+  if (loading) {
+    return (
+      <div>Loading...</div>
+    )
+  }
+  if (!isAuthenticated && !loading) {
   return (
     <Routes>
       <Route path='/' element={<Login setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>} />
@@ -58,7 +64,7 @@ useEffect(() => {
   if (currentUser?.admin) {
   return (
     <div className="App magic-pattern">
-      <Navbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
+      <AdminNavbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
           <Route path='/' element={<AdminDashboard />} />
           <Route path='/patients' element={<PatientList  list={searchResults} userId={currentUser.id} />} />
@@ -75,7 +81,6 @@ useEffect(() => {
         <UserNavbar user={currentUser?.username} setCurrentUser={setCurrentUser} setIsAuthenticated={setIsAuthenticated}/>
         <Routes>
           <Route path='/' element={<PatientList list={searchResults} userId={currentUser.id}/>} />
-          <Route path='/stock' element={<Stock />} />
         </Routes>
       </div>
     )

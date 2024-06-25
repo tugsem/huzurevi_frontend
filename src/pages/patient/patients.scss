@@ -1,7 +1,6 @@
 .patient-container {
-
   .search-field{
-    width: 100%;
+    width: 90%;
     border-radius: 10px;
     border: none;
     outline: none;
@@ -11,7 +10,7 @@
   }
   .patient-list{
     padding: 0;
-    width: 100%;
+    width: 90%;
     display: grid;
     gap: 30px;
     list-style-type: none;
