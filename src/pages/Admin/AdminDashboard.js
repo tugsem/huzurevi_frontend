@@ -44,6 +44,14 @@ const AdminDashboard = () => {
           <span>Patient Count:</span>
           <h5>{patientCount}</h5>
         </div>
+        <div className="statContainer d-flex">
+          <span>Budget:</span>
+          <h5>350k</h5>
+        </div>
+        <div className="statContainer d-flex">
+          <span>Total Bills:</span>
+          <h5>90k</h5>
+        </div>
       </div>
       <Bar
         className="chart"
